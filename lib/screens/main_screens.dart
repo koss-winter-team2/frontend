@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:three_day/home_screen.dart';
+import 'package:three_day/screens/home_screen.dart';
+import 'package:three_day/screens/profile_screen.dart';
 
 class MainScreens extends StatefulWidget {
   const MainScreens({super.key});
@@ -39,7 +40,7 @@ class _MainScreensState extends State<MainScreens>
           HomeScreen(),
           Tab(text: '탭1'),
 
-          Tab(text: '탭2'),
+          ProfileScreen(),
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(

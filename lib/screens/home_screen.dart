@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:three_day/utils/logger.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,12 +12,35 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
   TextEditingController _challengeNameEditingController =
-      TextEditingController();
+  TextEditingController();
   TextEditingController _challengeGoalController = TextEditingController();
   TextEditingController _challengePlanController = TextEditingController();
-  AutovalidateMode _autovalidateMode = AutovalidateMode.disabled;
+  late AutovalidateMode _autovalidateMode;
+
+  late bool _isEnavled;
+
+
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _challengePlanController.dispose();
+    _challengeNameEditingController.dispose();
+    _challengeGoalController.dispose();
+  }
+
+
 
   void challengeDialog() {
+    setState(() {
+      _challengeNameEditingController.clear();
+      _challengeGoalController.clear();
+      _challengePlanController.clear();
+      _isEnavled = true;
+      _autovalidateMode = AutovalidateMode.disabled;
+      _globalKey = GlobalKey<FormState>();
+    });
     showDialog(
       context: context,
       builder: (context) {
@@ -26,14 +50,21 @@ class _HomeScreenState extends State<HomeScreen> {
             borderRadius: BorderRadius.circular(30),
           ),
           child: Form(
+            autovalidateMode: _autovalidateMode,
             key: _globalKey,
             child: Container(
               decoration: BoxDecoration(
                 color: Color(0xFFD9EAFF),
                 borderRadius: BorderRadius.circular(30),
               ),
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.55,
+              width: MediaQuery
+                  .of(context)
+                  .size
+                  .width * 0.9,
+              height: MediaQuery
+                  .of(context)
+                  .size
+                  .height * 0.65,
 
               padding: EdgeInsets.all(9),
               child: Column(
@@ -57,6 +88,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     title: '챌린지 이름',
                     hint: '챌린지 생성이름을 작성 해주세요.',
                     number: '1',
+
                   ),
                   SizedBox(height: 12),
                   _buildInputSection(
@@ -78,12 +110,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
+
                             Navigator.pop(context);
+
                           },
                           style: ElevatedButton.styleFrom(
 
                             shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(12),
+                              borderRadius: BorderRadius.circular(20),
                             ),
                             padding: EdgeInsets.symmetric(
                                 vertical: 15
@@ -102,15 +136,33 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(width: 8),
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: () {
+                          onPressed: _isEnavled ? () {
+                            final form = _globalKey.currentState;
+                            if (form == null || !form.validate()) {
+                              return;
+                            }
 
-                            // 여기에 생성 로직 작성!
+                            setState(() {
+                              _autovalidateMode = AutovalidateMode.always;
+                              _isEnavled = false;
+                            });
+
+                            logger.d(_challengeGoalController);
+                            logger.d(_challengeNameEditingController);
+                            logger.d(_challengePlanController);
+
+
+                            // 여기에 생성 로직
 
                             Navigator.pop(context);
-                          },
+
+                          } : null,
                           style: ElevatedButton.styleFrom(
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
                             padding: EdgeInsets.symmetric(
-                              vertical: 15
+                                vertical: 15
                             ),
                             backgroundColor: Color(0xFF358CFF),
                           ),
@@ -133,6 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
+
 
   Widget _buildInputSection({
     required String number,
@@ -184,7 +237,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             validator: (value) {
-              if (value == null || value.trim().isEmpty) {
+              if (value == null || value
+                  .trim()
+                  .isEmpty) {
                 return '내용을 작성해 주세요.';
               }
               return null;
@@ -253,25 +308,27 @@ class _HomeScreenState extends State<HomeScreen> {
             padding: const EdgeInsets.all(20),
             child: Row(
               children: [
-                Container(
-                  width: 102,
-                  height: 97,
-                  decoration: BoxDecoration(
-                    color: Color(0xFFEAF3FE),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: Center(
-                    child: Container(
-                      width: 26,
-                      height: 26,
-                      decoration: BoxDecoration(
-                        color: Color(0xFF4B4B4B),
-                        shape: BoxShape.circle,
-                      ),
-                      child: GestureDetector(
-                        onTap: () => challengeDialog(),
-                        child: Icon(Icons.add, color: Colors.white, size: 13),
-                      ),
+                GestureDetector(
+                  onTap: () => challengeDialog(),
+                  child: Container(
+                    width: 102,
+                    height: 97,
+                    decoration: BoxDecoration(
+                      color: Color(0xFFEAF3FE),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                    child: Center(
+                        child: Container(
+                          width: 26,
+                          height: 26,
+                          decoration: BoxDecoration(
+                            color: Color(0xFF4B4B4B),
+                            shape: BoxShape.circle,
+                          ),
+                            child: Icon(Icons.add, color: Colors.white, size: 13),
+
+                        ),
+
                     ),
                   ),
                 ),

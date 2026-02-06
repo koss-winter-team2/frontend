@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:three_day/home_screen.dart';
-import 'package:three_day/main_screens.dart';
+import 'package:three_day/screens/home_screen.dart';
+import 'package:three_day/screens/main_screens.dart';
 
 void main() {
   runApp(const MyApp());
