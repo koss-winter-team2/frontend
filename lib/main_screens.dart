@@ -31,12 +31,14 @@ class _MainScreensState extends State<MainScreens>
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      resizeToAvoidBottomInset: false,
       body: TabBarView(
         controller: tabController,
         physics: NeverScrollableScrollPhysics(),
         children: [
           HomeScreen(),
           Tab(text: '탭1'),
+
           Tab(text: '탭2'),
         ],
       ),
