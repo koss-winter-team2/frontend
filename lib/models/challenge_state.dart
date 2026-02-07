@@ -7,7 +7,6 @@ class ChallengeState {
 
   bool get isCompleted => photoCount >= 3;
 
-
   ChallengeState copyWith({
     int? photoCount,
   }) {

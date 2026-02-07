@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 
+import 'screens/intro_screen.dart';
 import 'screens/certification/certification_screen.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const JakSimSamIl());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class JakSimSamIl extends StatelessWidget {
+  const JakSimSamIl({super.key});
 
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: CertificationScreen(),
+      home: IntroScreen(),
     );
   }
 }
