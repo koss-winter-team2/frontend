@@ -11,9 +11,13 @@ class JakSimSamIl extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: IntroScreen(),
+      home: const IntroScreen(),
+      theme: ThemeData(
+        useMaterial3: false,
+        scaffoldBackgroundColor: Colors.white,
+      ),
     );
   }
 }
