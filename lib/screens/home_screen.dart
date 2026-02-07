@@ -12,14 +12,12 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
   TextEditingController _challengeNameEditingController =
-  TextEditingController();
+      TextEditingController();
   TextEditingController _challengeGoalController = TextEditingController();
   TextEditingController _challengePlanController = TextEditingController();
   late AutovalidateMode _autovalidateMode;
 
   late bool _isEnavled;
-
-
 
   @override
   void dispose() {
@@ -29,8 +27,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _challengeNameEditingController.dispose();
     _challengeGoalController.dispose();
   }
-
-
 
   void challengeDialog() {
     setState(() {
@@ -57,19 +53,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 color: Color(0xFFD9EAFF),
                 borderRadius: BorderRadius.circular(30),
               ),
-              width: MediaQuery
-                  .of(context)
-                  .size
-                  .width * 0.9,
-              height: MediaQuery
-                  .of(context)
-                  .size
-                  .height * 0.65,
-
+              width: MediaQuery.of(context).size.width * 0.9,
+              height: MediaQuery.of(context).size.height * 0.65,
               padding: EdgeInsets.all(9),
               child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(6),
@@ -83,50 +70,53 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                   SizedBox(height: 12),
-                  _buildInputSection(
-                    editingController: _challengeNameEditingController,
-                    title: '챌린지 이름',
-                    hint: '챌린지 생성이름을 작성 해주세요.',
-                    number: '1',
-
+                  Expanded(
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          _buildInputSection(
+                            editingController: _challengeNameEditingController,
+                            title: '챌린지 이름',
+                            hint: '챌린지 생성이름을 작성 해주세요.',
+                            number: '1',
+                          ),
+                          SizedBox(height: 12),
+                          _buildInputSection(
+                            editingController: _challengeGoalController,
+                            title: '카테고리',
+                            hint: 'ex) 다이어트, 건강, 취미, 자기개발',
+                            number: '2',
+                          ),
+                          SizedBox(height: 12),
+                          _buildInputSection(
+                            editingController: _challengePlanController,
+                            title: '작심 3일 계획',
+                            hint: 'ex) 스쿼트 10회, 물 1L 마시기',
+                            number: '3',
+                          ),
+                        ],
+                      ),
+                    ),
                   ),
-                  SizedBox(height: 12),
-                  _buildInputSection(
-                    editingController: _challengeGoalController,
-                    title: '카테고리',
-                    hint: 'ex) 다이어트, 건강, 취미, 자기개발',
-                    number: '2',
-                  ),
-                  SizedBox(height: 12),
-                  _buildInputSection(
-                    editingController: _challengePlanController,
-                    title: '챌린지 이름',
-                    hint: 'ex) 스쿼트 10회, 물 1L 마시기',
-                    number: '3',
-                  ),
-                  Spacer(),
+                  SizedBox(height: 16),
                   Row(
                     children: [
                       Expanded(
                         child: ElevatedButton(
                           onPressed: () {
-
                             Navigator.pop(context);
-
                           },
                           style: ElevatedButton.styleFrom(
-
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 15
-                            ),
+                            padding: EdgeInsets.symmetric(vertical: 15),
                             backgroundColor: Colors.grey[300],
                           ),
                           child: Text(
                             '취소',
                             style: TextStyle(
+                              fontFamily: 'Pretendard',
                               color: Colors.black45,
                               fontSize: 20,
                             ),
@@ -136,39 +126,38 @@ class _HomeScreenState extends State<HomeScreen> {
                       SizedBox(width: 8),
                       Expanded(
                         child: ElevatedButton(
-                          onPressed: _isEnavled ? () {
-                            final form = _globalKey.currentState;
-                            if (form == null || !form.validate()) {
-                              return;
-                            }
+                          onPressed: _isEnavled
+                              ? () {
+                                  final form = _globalKey.currentState;
+                                  if (form == null || !form.validate()) {
+                                    return;
+                                  }
 
-                            setState(() {
-                              _autovalidateMode = AutovalidateMode.always;
-                              _isEnavled = false;
-                            });
+                                  setState(() {
+                                    _autovalidateMode = AutovalidateMode.always;
+                                    _isEnavled = false;
+                                  });
 
-                            logger.d(_challengeGoalController);
-                            logger.d(_challengeNameEditingController);
-                            logger.d(_challengePlanController);
+                                  logger.d(_challengeGoalController.text);
+                                  logger.d(
+                                    _challengeNameEditingController.text,
+                                  );
+                                  logger.d(_challengePlanController.text);
 
-
-                            // 여기에 생성 로직
-
-                            Navigator.pop(context);
-
-                          } : null,
+                                  Navigator.pop(context);
+                                }
+                              : null,
                           style: ElevatedButton.styleFrom(
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            padding: EdgeInsets.symmetric(
-                                vertical: 15
-                            ),
+                            padding: EdgeInsets.symmetric(vertical: 15),
                             backgroundColor: Color(0xFF358CFF),
                           ),
                           child: Text(
                             '생성',
                             style: TextStyle(
+                              fontFamily: 'Pretendard',
                               color: Colors.white,
                               fontSize: 20,
                             ),
@@ -185,7 +174,6 @@ class _HomeScreenState extends State<HomeScreen> {
       },
     );
   }
-
 
   Widget _buildInputSection({
     required String number,
@@ -237,9 +225,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             validator: (value) {
-              if (value == null || value
-                  .trim()
-                  .isEmpty) {
+              if (value == null || value.trim().isEmpty) {
                 return '내용을 작성해 주세요.';
               }
               return null;
@@ -260,11 +246,19 @@ class _HomeScreenState extends State<HomeScreen> {
           SizedBox(height: 28.46),
           Text(
             '사용자님, 안녕하세요!',
-            style: TextStyle(fontWeight: FontWeight.normal, fontSize: 20),
+            style: TextStyle(
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.normal,
+              fontSize: 20,
+            ),
           ),
           Text(
             '오늘도 작심삼일을 향해 달려볼까요?',
-            style: TextStyle(fontWeight: FontWeight.normal, fontSize: 23),
+            style: TextStyle(
+              fontFamily: 'Pretendard',
+              fontWeight: FontWeight.normal,
+              fontSize: 23,
+            ),
           ),
           SizedBox(height: 28.54),
           Container(
@@ -281,7 +275,11 @@ class _HomeScreenState extends State<HomeScreen> {
               padding: const EdgeInsets.all(10.0),
               child: Text(
                 '진행중인 챌린지',
-                style: TextStyle(fontSize: 16, color: Colors.white),
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.white,
+                  fontFamily: 'Pretendard',
+                ),
               ),
             ),
           ),
@@ -299,7 +297,7 @@ class _HomeScreenState extends State<HomeScreen> {
               //요부분 나중에 챌린지 생성하면 화면 바뀌도록!!
               child: Text(
                 '현재 진행중인 챌린지가 없어요.. \n신규 챌린지를 생성하여, 도전해보세요!',
-                style: TextStyle(fontSize: 16),
+                style: TextStyle(fontSize: 16, fontFamily: 'Pretendard'),
               ),
             ),
           ),
@@ -318,23 +316,24 @@ class _HomeScreenState extends State<HomeScreen> {
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
-                        child: Container(
-                          width: 26,
-                          height: 26,
-                          decoration: BoxDecoration(
-                            color: Color(0xFF4B4B4B),
-                            shape: BoxShape.circle,
-                          ),
-                            child: Icon(Icons.add, color: Colors.white, size: 13),
-
+                      child: Container(
+                        width: 26,
+                        height: 26,
+                        decoration: BoxDecoration(
+                          color: Color(0xFF4B4B4B),
+                          shape: BoxShape.circle,
                         ),
-
+                        child: Icon(Icons.add, color: Colors.white, size: 13),
+                      ),
                     ),
                   ),
                 ),
                 SizedBox(width: 32),
                 Center(
-                  child: Text('신규 챌린지 생성', style: TextStyle(fontSize: 24)),
+                  child: Text(
+                    '신규 챌린지 생성',
+                    style: TextStyle(fontFamily: 'Pretendard', fontSize: 24),
+                  ),
                 ),
               ],
             ),
