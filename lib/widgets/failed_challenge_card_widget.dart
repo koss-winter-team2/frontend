@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:three_day/models/challenge_state.dart';
+
+import '../models/challenge_state.dart';
 
 class FailedChallengeCardWidget extends StatefulWidget {
   final String challengeName;
@@ -33,10 +34,10 @@ class _FailedChallengeCardWidgetState extends State<FailedChallengeCardWidget> {
     return Container(
       width: 320,
       height: 160,
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
-        color: Color(0xFFF6F7FC),
+        color: const Color(0xFFF6F7FC),
       ),
       // 구분용 색
       child: Column(
@@ -46,11 +47,11 @@ class _FailedChallengeCardWidgetState extends State<FailedChallengeCardWidget> {
               Expanded(
                 child: Text(
                   widget.challengeName,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 13, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 5),
                 height: 25,
                 child: Center(
                   child: Text(
@@ -59,11 +60,11 @@ class _FailedChallengeCardWidgetState extends State<FailedChallengeCardWidget> {
                   ),
                 ),
                 decoration: BoxDecoration(
-                  color: Color(0xFFD9EAFF),
+                  color: const Color(0xFFD9EAFF),
                   borderRadius: BorderRadius.circular(15),
                 ),
               ),
-              SizedBox(width: 5,),
+              const SizedBox(width: 5),
               GestureDetector(
                 onTap: () {
                   //삭제 로직 넣기
@@ -71,9 +72,11 @@ class _FailedChallengeCardWidgetState extends State<FailedChallengeCardWidget> {
                 child: Container(
                   width: 24,
                   height: 24,
-                  decoration: BoxDecoration(shape: BoxShape.circle, color: Color(0xFFC8C8C8)),
+                  decoration: const BoxDecoration(
+                      shape: BoxShape.circle,
+                      color: Color(0xFFC8C8C8)
+                  ),
                   child: Image.asset('assets/images/trash.png')
-
                 ),
               )
             ],

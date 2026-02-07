@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
-import '../../widgets/certification_widget.dart';
-import '../../models/challenge_state.dart';
+import '../widgets/certification_widget.dart';
+import '../models/challenge_state.dart';
 
 class CertificationScreen extends StatefulWidget {
   const CertificationScreen({super.key});

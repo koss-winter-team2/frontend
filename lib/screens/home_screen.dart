@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:three_day/utils/logger.dart';
+
+import '../utils/logger.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -11,8 +12,7 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
-  TextEditingController _challengeNameEditingController =
-      TextEditingController();
+  final TextEditingController _challengeNameEditingController = TextEditingController();
   TextEditingController _challengeGoalController = TextEditingController();
   TextEditingController _challengePlanController = TextEditingController();
   late AutovalidateMode _autovalidateMode;
@@ -59,8 +59,8 @@ class _HomeScreenState extends State<HomeScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Padding(
-                    padding: const EdgeInsets.all(6),
+                  const Padding(
+                    padding: EdgeInsets.all(6),
                     child: Text(
                       '작심삼일 챌린지 생성',
                       style: TextStyle(
@@ -70,7 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 12),
+                  const SizedBox(height: 12),
                   Expanded(
                     child: SingleChildScrollView(
                       child: Column(
@@ -82,14 +82,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             number: '1',
                           ),
 
-                          SizedBox(height: 12),
+                          const SizedBox(height: 12),
                           _buildInputSection(
                             editingController: _challengeGoalController,
                             title: '카테고리',
                             hint: 'ex) 다이어트, 건강, 취미, 자기개발',
                             number: '2',
                           ),
-                          SizedBox(height: 12),
+                          const SizedBox(height: 12),
                           _buildInputSection(
                             editingController: _challengePlanController,
                             title: '작심 3일 계획',
@@ -100,7 +100,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       ),
                     ),
                   ),
-                  SizedBox(height: 16),
+                  const SizedBox(height: 16),
                   Row(
                     children: [
                       Expanded(
@@ -115,7 +115,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             padding: EdgeInsets.symmetric(vertical: 15),
                             backgroundColor: Colors.grey[300],
                           ),
-                          child: Text(
+                          child: const Text(
                             '취소',
                             style: TextStyle(
                               fontFamily: 'Pretendard',
@@ -156,7 +156,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             padding: EdgeInsets.symmetric(vertical: 15),
                             backgroundColor: Color(0xFF358CFF),
                           ),
-                          child: Text(
+                          child: const Text(
                             '생성',
                             style: TextStyle(
                               fontFamily: 'Pretendard',
@@ -197,19 +197,19 @@ class _HomeScreenState extends State<HomeScreen> {
               Container(
                 width: 24.85,
                 height: 24.85,
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   shape: BoxShape.circle,
                   color: Color(0xFFD9D9D9),
                 ),
                 child: Center(
-                  child: Text(number, style: TextStyle(color: Colors.white)),
+                  child: Text(number, style: const TextStyle(color: Colors.white)),
                 ),
               ),
-              SizedBox(width: 10),
-              Center(child: Text(title, style: TextStyle(fontSize: 13))),
+              const SizedBox(width: 10),
+              Center(child: Text(title, style: const TextStyle(fontSize: 13))),
             ],
           ),
-          Divider(color: Color(0xFFF4F4F4), thickness: 1, height: 5),
+          const Divider(color: Color(0xFFF4F4F4), thickness: 1, height: 5),
           TextFormField(
             enabled: true,
             controller: editingController,
@@ -221,7 +221,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               isDense: true,
 
-              contentPadding: EdgeInsets.symmetric(vertical: 6),
+              contentPadding: const EdgeInsets.symmetric(vertical: 6),
               enabledBorder: UnderlineInputBorder(
                 borderSide: BorderSide(color: Colors.grey[300]!),
               ),
@@ -241,12 +241,12 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsets.symmetric(horizontal: 16),
+      padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          SizedBox(height: 28.46),
-          Text(
+          const SizedBox(height: 28.46),
+          const Text(
             '사용자님, 안녕하세요!',
             style: TextStyle(
               fontFamily: 'Pretendard',
@@ -254,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
               fontSize: 20,
             ),
           ),
-          Text(
+          const Text(
             '오늘도 작심삼일을 향해 달려볼까요?',
             style: TextStyle(
               fontFamily: 'Pretendard',
@@ -262,19 +262,19 @@ class _HomeScreenState extends State<HomeScreen> {
               fontSize: 23,
             ),
           ),
-          SizedBox(height: 28.54),
+          const SizedBox(height: 28.54),
           Container(
             width: double.infinity,
             height: 40.17,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Colors.blue,
               borderRadius: BorderRadius.only(
                 topLeft: Radius.circular(15),
                 topRight: Radius.circular(15),
               ),
             ),
-            child: Padding(
-              padding: const EdgeInsets.all(10.0),
+            child: const Padding(
+              padding: EdgeInsets.all(10.0),
               child: Text(
                 '진행중인 챌린지',
                 style: TextStyle(
@@ -288,14 +288,14 @@ class _HomeScreenState extends State<HomeScreen> {
           Container(
             width: double.infinity,
             height: 348,
-            decoration: BoxDecoration(
+            decoration: const BoxDecoration(
               color: Color(0xFFD1D1D1),
               borderRadius: BorderRadius.only(
                 bottomRight: Radius.circular(15),
                 bottomLeft: Radius.circular(15),
               ),
             ),
-            child: Center(
+            child: const Center(
               //요부분 나중에 챌린지 생성하면 화면 바뀌도록!! InProgressChallengeWidget() 으로 바꾸기
               child: Text(
                 '현재 진행중인 챌린지가 없어요.. \n신규 챌린지를 생성하여, 도전해보세요!',
@@ -303,7 +303,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
           ),
-          SizedBox(height: 80),
+          const SizedBox(height: 80),
           Padding(
             padding: const EdgeInsets.all(20),
             child: Row(
@@ -314,24 +314,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: 102,
                     height: 97,
                     decoration: BoxDecoration(
-                      color: Color(0xFFEAF3FE),
+                      color: const Color(0xFFEAF3FE),
                       borderRadius: BorderRadius.circular(10),
                     ),
                     child: Center(
                       child: Container(
                         width: 26,
                         height: 26,
-                        decoration: BoxDecoration(
+                        decoration: const BoxDecoration(
                           color: Color(0xFF4B4B4B),
                           shape: BoxShape.circle,
                         ),
-                        child: Icon(Icons.add, color: Colors.white, size: 13),
+                        child: const Icon(Icons.add, color: Colors.white, size: 13),
                       ),
                     ),
                   ),
                 ),
-                SizedBox(width: 32),
-                Center(
+                const SizedBox(width: 32),
+                const Center(
                   child: Text(
                     '신규 챌린지 생성',
                     style: TextStyle(fontFamily: 'Pretendard', fontSize: 24),

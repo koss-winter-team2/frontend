@@ -1,9 +1,9 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:three_day/screens/home_screen.dart';
-import 'package:three_day/screens/profile_screen.dart';
-import 'package:three_day/screens/record_screen.dart';
-import 'package:three_day/widgets/Challenge_complete_card.dart';
+
+import '../screens/home_screen.dart';
+import '../screens/profile_screen.dart';
+import '../screens/record_screen.dart';
+import '../widgets/challenge_complete_card.dart';
 
 class MainScreens extends StatefulWidget {
   const MainScreens({super.key});
@@ -34,14 +34,14 @@ class _MainScreensState extends State<MainScreens>
       resizeToAvoidBottomInset: false,
       body: TabBarView(
         controller: tabController,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         children: [
-          HomeScreen(),
+          const HomeScreen(),
 
           RecordScreen(challengeName: '물마시기', challengePlan: '하루 1리터', clearDate: DateTime.now(),),
           //Center(child: ChallengeCompleteCard(challengeName: '물마시기', challengePlan: '하루 1리터', clearDate: DateTime.now(),)),
 
-          ProfileScreen(),
+          const ProfileScreen(),
 
         ],
       ),
@@ -51,12 +51,12 @@ class _MainScreensState extends State<MainScreens>
           tabController.animateTo(index);
           setState(() {});
         },
-        selectedItemColor: Color(0xFF358CFF),
+        selectedItemColor: const Color(0xFF358CFF),
         iconSize: 35,
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: false,
         showUnselectedLabels: false,
-        items: [
+        items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home),
             label: 'home',

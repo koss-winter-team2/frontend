@@ -1,6 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:three_day/widgets/in_progress_challenge_widget.dart';
+
+import '../widgets/in_progress_challenge_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -16,8 +16,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Container(
-          decoration: BoxDecoration(color: Color(0xFFD9EAFF)),
-          padding: EdgeInsets.all(15),
+          decoration: const BoxDecoration(color: Color(0xFFD9EAFF)),
+          padding: const EdgeInsets.all(15),
           height: 96,
           width: MediaQuery.of(context).size.width,
           child: Stack(
@@ -27,7 +27,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   Container(
                     width: 80,
                     height: 80,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       shape: BoxShape.circle,
                       color: Colors.white,
                     ),
@@ -37,7 +37,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
+                        const Text(
                           '김코스',
                           style: TextStyle(
                             fontFamily: 'Pretendard',
@@ -49,9 +49,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           height: 24,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(20),
-                            border: Border.all(color: Color(0xFF979797)),
+                            border: Border.all(color: const Color(0xFF979797)),
                           ),
-                          child: Center(
+                          child: const Center(
                             child: Text(
                               '로그아웃',
                               style: TextStyle(
@@ -68,7 +68,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   ),
                 ],
               ),
-              Positioned(
+              const Positioned(
                 right: 0,
                 bottom: 0,
                 child: Text(
@@ -84,8 +84,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         SizedBox(height: 15),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Text(
             '내 계정',
             style: TextStyle(
@@ -96,8 +96,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
         ),
         SizedBox(height: 5),
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 20),
+        const Padding(
+          padding: EdgeInsets.symmetric(horizontal: 20),
           child: Text(
             'koss@kookmin.ac.kr',
             style: TextStyle(
@@ -108,8 +108,8 @@ class _ProfileScreenState extends State<ProfileScreen> {
           ),
 
         ),
-        SizedBox(height: 7,),
-        Divider(color: Color(0xFFD1D5DA), thickness: 1, height: 5),
+        const SizedBox(height: 7,),
+        const Divider(color: Color(0xFFD1D5DA), thickness: 1, height: 5),
 
       ],
     );

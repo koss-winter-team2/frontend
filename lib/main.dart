@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import 'screens/intro_screen.dart';
-import 'screens/certification/certification_screen.dart';
 
 void main() {
   runApp(const JakSimSamIl());

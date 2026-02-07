@@ -1,7 +1,7 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:three_day/widgets/Challenge_complete_card.dart';
-import 'package:three_day/widgets/failed_challenge_card_widget.dart';
+
+import '../widgets/challenge_complete_card.dart';
+import '../widgets/failed_challenge_card_widget.dart';
 
 class RecordScreen extends StatefulWidget {
   final String challengeName;
@@ -27,10 +27,10 @@ class _RecordScreenState extends State<RecordScreen> {
           Padding(
             padding: const EdgeInsets.all(20),
             child: Container(
-              padding: EdgeInsets.all(16),
+              padding: const EdgeInsets.all(16),
               height: MediaQuery.of(context).size.height * 0.8,
               decoration: BoxDecoration(
-                color: Color(0xFFD9EAFF),
+                color: const Color(0xFF_D9_EA_FF),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: ListView.builder(
@@ -55,7 +55,7 @@ class _RecordScreenState extends State<RecordScreen> {
             maxChildSize: 1.0,
             builder: (context, scrollController) {
               return Container(
-                decoration: BoxDecoration(
+                decoration: const BoxDecoration(
                   boxShadow: [
                     BoxShadow(
                       color: Colors.black26,
@@ -84,10 +84,10 @@ class _RecordScreenState extends State<RecordScreen> {
                                     borderRadius: BorderRadius.circular(2)
                                 ),
                               ),
-                              Align(
+                              const Align(
                                 alignment: Alignment.topLeft,
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 16,bottom: 15),
+                                  padding: EdgeInsets.only(left: 16,bottom: 15),
                                   child: Text('미완수 챌린지 목록',style: TextStyle(
                                       fontFamily: 'Pretendard',
                                       color: Colors.white,
@@ -101,7 +101,7 @@ class _RecordScreenState extends State<RecordScreen> {
                         }
 
                         return Container(
-                          decoration: BoxDecoration(color: Colors.white),
+                          decoration: const BoxDecoration(color: Colors.white),
                           child: Padding(
                             padding: const EdgeInsets.symmetric(vertical: 7,horizontal: 10),
                             child: FailedChallengeCardWidget(

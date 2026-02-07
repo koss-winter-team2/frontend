@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stroke_text/stroke_text.dart';
 
-import '../screens/certification/certification_screen.dart';
+import 'certification_screen.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});

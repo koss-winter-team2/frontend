@@ -1,6 +1,4 @@
 import 'dart:io';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ChallengeCompleteCard extends StatefulWidget {
@@ -33,7 +31,7 @@ class _ChallengeCompleteCardState extends State<ChallengeCompleteCard> {
     return Container(
       width: 320,
       height: 160,
-      padding: EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(15),
         color: Colors.white,
@@ -46,26 +44,26 @@ class _ChallengeCompleteCardState extends State<ChallengeCompleteCard> {
               Expanded(
                 child: Text(
                   widget.challengeName,
-                  style: TextStyle(fontSize: 20),
+                  style: const TextStyle(fontSize: 20),
                 ),
               ),
               Container(
-                padding: EdgeInsets.symmetric(horizontal: 13, vertical: 5),
+                padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 5),
                 height: 25,
                 child: Center(
                   child: Text(
-                    widget.challengePlan,
                     style: TextStyle(fontSize: 15),
+                    widget.challengePlan,
                   ),
                 ),
                 decoration: BoxDecoration(
-                  color: Color(0xFFD9EAFF),
                   borderRadius: BorderRadius.circular(15),
+                  color: const Color(0xFFD9EAFF),
                 ),
               ),
             ],
           ),
-          SizedBox(height: 20),
+          const SizedBox(height: 20),
 
           Row(
             children: [
@@ -85,13 +83,13 @@ class _ChallengeCompleteCardState extends State<ChallengeCompleteCard> {
                 child: Container(
                   width: 10,
                   height: 10,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color(0xFFD9EAFF),
                   ),
                 ),
               ),
-              SizedBox(width: 2),
+              const SizedBox(width: 2),
               Container(
                 width: 65,
                 height: 65,
@@ -103,12 +101,12 @@ class _ChallengeCompleteCardState extends State<ChallengeCompleteCard> {
                   ),
                 ),
               ),
-              SizedBox(width: 2),
+              const SizedBox(width: 2),
               Center(
                 child: Container(
                   width: 10,
                   height: 10,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color(0xFFD9EAFF),
                   ),
@@ -126,12 +124,11 @@ class _ChallengeCompleteCardState extends State<ChallengeCompleteCard> {
                   ),
                 ),
               ),
-             SizedBox(width: 10,),
+             const SizedBox(width: 10),
               Column(
                 children: [
-                  SizedBox(height: 21,),
+                  const SizedBox(height: 21),
                   Container(
-
                     width: 50,
                     height: 50,
                     child: ClipRRect(
@@ -149,7 +146,13 @@ class _ChallengeCompleteCardState extends State<ChallengeCompleteCard> {
           Expanded(
             child: Align(
               alignment: Alignment.bottomRight,
-              child: Text(date, style: TextStyle(fontFamily: 'Pretendard', fontSize: 12),),
+              child: Text(
+                date,
+                style: const TextStyle(
+                    fontFamily: 'Pretendard',
+                    fontSize: 12,
+                ),
+              ),
             ),
           ),
         ],
