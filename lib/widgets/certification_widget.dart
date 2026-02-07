@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../screens/main_screen.dart';
 import '../models/challenge_state.dart';
 
 class CertificationWidget extends StatelessWidget {
@@ -187,7 +188,12 @@ class CertificationWidget extends StatelessWidget {
               children: [
                 IconButton(
                   onPressed: () {
-                    Navigator.pop(context);
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (_) => const MainScreen(),
+                        ),
+                    );
                   },
                   icon: const Icon(
                     Icons.keyboard_arrow_left_rounded,
