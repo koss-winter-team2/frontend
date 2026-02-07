@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../widgets/bottom_navbar_widget.dart';
-
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -17,8 +15,6 @@ class _HomeScreenState extends State<HomeScreen> {
   late AutovalidateMode _autovalidateMode;
 
   late bool _isEnavled;
-
-  int _currentIndex = 0;
 
   @override
   void dispose() {
@@ -67,7 +63,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(
                         fontFamily: 'Pretendard',
                         fontSize: 27,
-                        fontWeight: FontWeight.w900,
+                        fontWeight: FontWeight.w500,
                       ),
                     ),
                   ),
@@ -79,7 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           _buildInputSection(
                             editingController: _challengeNameEditingController,
                             title: '챌린지 이름',
-                            hint: '챌린지 생성이름을 작성 해주세요.',
+                            hint: '챌린지 생성이름을 작성 해주세요!',
                             number: '1',
                           ),
 
@@ -93,7 +89,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           const SizedBox(height: 12),
                           _buildInputSection(
                             editingController: _challengePlanController,
-                            title: '작심 3일 계획',
+                            title: '계획',
                             hint: 'ex) 스쿼트 10회, 물 1L 마시기',
                             number: '3',
                           ),
@@ -233,8 +229,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      body: SafeArea(
+    return Material(
+      child: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 16),
           child: Column(
@@ -347,14 +343,6 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
-      ),
-      bottomNavigationBar: BottomNavbarWidget(
-        currentIndex: _currentIndex,
-        onTap: (index) {
-          setState(() {
-            _currentIndex = index;
-          });
-        },
       ),
     );
   }
