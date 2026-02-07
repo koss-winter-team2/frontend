@@ -1,7 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
-import '../utils/logger.dart';
+import '../widgets/bottom_navbar_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -18,6 +17,8 @@ class _HomeScreenState extends State<HomeScreen> {
   late AutovalidateMode _autovalidateMode;
 
   late bool _isEnavled;
+
+  int _currentIndex = 0;
 
   @override
   void dispose() {
@@ -41,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) {
         return Dialog(
-          insetPadding: EdgeInsets.all(20),
+          insetPadding: const EdgeInsets.all(20),
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(30),
           ),
@@ -50,12 +51,12 @@ class _HomeScreenState extends State<HomeScreen> {
             key: _globalKey,
             child: Container(
               decoration: BoxDecoration(
-                color: Color(0xFFD9EAFF),
+                color: const Color(0xFFD9EAFF),
                 borderRadius: BorderRadius.circular(30),
               ),
               width: MediaQuery.of(context).size.width * 0.9,
               height: MediaQuery.of(context).size.height * 0.65,
-              padding: EdgeInsets.all(9),
+              padding: const EdgeInsets.all(9),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -112,7 +113,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            padding: EdgeInsets.symmetric(vertical: 15),
+                            padding: const EdgeInsets.symmetric(vertical: 15),
                             backgroundColor: Colors.grey[300],
                           ),
                           child: const Text(
@@ -125,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                       ),
-                      SizedBox(width: 8),
+                      const SizedBox(width: 8),
                       Expanded(
                         child: ElevatedButton(
                           onPressed: _isEnavled
@@ -134,18 +135,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                   if (form == null || !form.validate()) {
                                     return;
                                   }
-
                                   setState(() {
                                     _autovalidateMode = AutovalidateMode.always;
                                     _isEnavled = false;
                                   });
-
-                                  logger.d(_challengeGoalController.text);
-                                  logger.d(
-                                    _challengeNameEditingController.text,
-                                  );
-                                  logger.d(_challengePlanController.text);
-
                                   Navigator.pop(context);
                                 }
                               : null,
@@ -153,8 +146,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(20),
                             ),
-                            padding: EdgeInsets.symmetric(vertical: 15),
-                            backgroundColor: Color(0xFF358CFF),
+                            padding: const EdgeInsets.symmetric(vertical: 15),
+                            backgroundColor: const Color(0xFF358CFF),
                           ),
                           child: const Text(
                             '생성',
@@ -240,107 +233,128 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SizedBox(height: 28.46),
-          const Text(
-            '사용자님, 안녕하세요!',
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontWeight: FontWeight.normal,
-              fontSize: 20,
-            ),
-          ),
-          const Text(
-            '오늘도 작심삼일을 향해 달려볼까요?',
-            style: TextStyle(
-              fontFamily: 'Pretendard',
-              fontWeight: FontWeight.normal,
-              fontSize: 23,
-            ),
-          ),
-          const SizedBox(height: 28.54),
-          Container(
-            width: double.infinity,
-            height: 40.17,
-            decoration: const BoxDecoration(
-              color: Colors.blue,
-              borderRadius: BorderRadius.only(
-                topLeft: Radius.circular(15),
-                topRight: Radius.circular(15),
-              ),
-            ),
-            child: const Padding(
-              padding: EdgeInsets.all(10.0),
-              child: Text(
-                '진행중인 챌린지',
+    return Scaffold(
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const SizedBox(height: 28.46),
+              const Text(
+                '사용자님, 안녕하세요!',
                 style: TextStyle(
-                  fontSize: 16,
-                  color: Colors.white,
                   fontFamily: 'Pretendard',
+                  fontWeight: FontWeight.w400,
+                  fontSize: 20,
                 ),
               ),
-            ),
-          ),
-          Container(
-            width: double.infinity,
-            height: 348,
-            decoration: const BoxDecoration(
-              color: Color(0xFFD1D1D1),
-              borderRadius: BorderRadius.only(
-                bottomRight: Radius.circular(15),
-                bottomLeft: Radius.circular(15),
+              const Text(
+                '오늘도 작심삼일을 향해 달려볼까요?',
+                style: TextStyle(
+                  fontFamily: 'Pretendard',
+                  fontWeight: FontWeight.w500,
+                  fontSize: 23,
+                ),
               ),
-            ),
-            child: const Center(
-              //요부분 나중에 챌린지 생성하면 화면 바뀌도록!! InProgressChallengeWidget() 으로 바꾸기
-              child: Text(
-                '현재 진행중인 챌린지가 없어요.. \n신규 챌린지를 생성하여, 도전해보세요!',
-                style: TextStyle(fontSize: 16, fontFamily: 'Pretendard'),
-              ),
-            ),
-          ),
-          const SizedBox(height: 80),
-          Padding(
-            padding: const EdgeInsets.all(20),
-            child: Row(
-              children: [
-                GestureDetector(
-                  onTap: () => challengeDialog(),
-                  child: Container(
-                    width: 102,
-                    height: 97,
-                    decoration: BoxDecoration(
-                      color: const Color(0xFFEAF3FE),
-                      borderRadius: BorderRadius.circular(10),
+              const SizedBox(height: 28.54),
+              Container(
+                width: double.infinity,
+                height: 40.17,
+                decoration: const BoxDecoration(
+                  color: Colors.blue,
+                  borderRadius: BorderRadius.only(
+                    topLeft: Radius.circular(15),
+                    topRight: Radius.circular(15),
+                  ),
+                ),
+                child: const Padding(
+                  padding: EdgeInsets.all(9),
+                  child: Text(
+                    '진행중인 챌린지',
+                    style: TextStyle(
+                      fontSize: 16,
+                      color: Colors.white,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w500,
                     ),
-                    child: Center(
+                  ),
+                ),
+              ),
+              Container(
+                width: double.infinity,
+                height: 348,
+                decoration: const BoxDecoration(
+                  color: Color(0xFFD1D1D1),
+                  borderRadius: BorderRadius.only(
+                    bottomRight: Radius.circular(15),
+                    bottomLeft: Radius.circular(15),
+                  ),
+                ),
+                child: const Center(
+                  //요부분 나중에 챌린지 생성하면 화면 바뀌도록!! InProgressChallengeWidget() 으로 바꾸기
+                  child: Text(
+                    '현재 진행중인 챌린지가 없어요.. \n신규 챌린지를 생성하여, 도전해보세요!',
+                    style: TextStyle(
+                      fontSize: 16,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 20),
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Row(
+                  children: [
+                    GestureDetector(
+                      onTap: () => challengeDialog(),
                       child: Container(
-                        width: 26,
-                        height: 26,
-                        decoration: const BoxDecoration(
-                          color: Color(0xFF4B4B4B),
-                          shape: BoxShape.circle,
+                        width: 102,
+                        height: 97,
+                        decoration: BoxDecoration(
+                          color: const Color(0xFFEAF3FE),
+                          borderRadius: BorderRadius.circular(10),
                         ),
-                        child: const Icon(Icons.add, color: Colors.white, size: 13),
+                        child: Center(
+                          child: Container(
+                            width: 26,
+                            height: 26,
+                            decoration: const BoxDecoration(
+                              color: Color(0xFF4B4B4B),
+                              shape: BoxShape.circle,
+                            ),
+                            child: const Icon(Icons.add, color: Colors.white, size: 13),
+                          ),
+                        ),
                       ),
                     ),
-                  ),
+                    const SizedBox(width: 40),
+                    const Center(
+                      child: Text(
+                        '신규 챌린지 생성',
+                        style: TextStyle(
+                          fontFamily: 'Pretendard',
+                          fontSize: 20,
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ],
                 ),
-                const SizedBox(width: 32),
-                const Center(
-                  child: Text(
-                    '신규 챌린지 생성',
-                    style: TextStyle(fontFamily: 'Pretendard', fontSize: 24),
-                  ),
-                ),
-              ],
-            ),
+              ),
+            ],
           ),
-        ],
+        ),
+      ),
+      bottomNavigationBar: BottomNavbarWidget(
+        currentIndex: _currentIndex,
+        onTap: (index) {
+          setState(() {
+            _currentIndex = index;
+          });
+        },
       ),
     );
   }

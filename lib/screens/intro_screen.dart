@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:stroke_text/stroke_text.dart';
 
-import 'certification_screen.dart';
+import 'home_screen.dart';
 
 class IntroScreen extends StatefulWidget {
   const IntroScreen({super.key});
@@ -18,7 +18,7 @@ class _IntroScreenState extends State<IntroScreen> {
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const CertificationScreen()),
+        MaterialPageRoute(builder: (context) => const HomeScreen()),
       );
     });
   }
