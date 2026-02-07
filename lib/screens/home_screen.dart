@@ -57,6 +57,7 @@ class _HomeScreenState extends State<HomeScreen> {
               height: MediaQuery.of(context).size.height * 0.65,
               padding: EdgeInsets.all(9),
               child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(6),
@@ -65,7 +66,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       style: TextStyle(
                         fontFamily: 'Pretendard',
                         fontSize: 27,
-                        fontWeight: FontWeight.w800,
+                        fontWeight: FontWeight.w900,
                       ),
                     ),
                   ),
@@ -80,6 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             hint: '챌린지 생성이름을 작성 해주세요.',
                             number: '1',
                           ),
+
                           SizedBox(height: 12),
                           _buildInputSection(
                             editingController: _challengeGoalController,
@@ -294,7 +296,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             child: Center(
-              //요부분 나중에 챌린지 생성하면 화면 바뀌도록!!
+              //요부분 나중에 챌린지 생성하면 화면 바뀌도록!! InProgressChallengeWidget() 으로 바꾸기
               child: Text(
                 '현재 진행중인 챌린지가 없어요.. \n신규 챌린지를 생성하여, 도전해보세요!',
                 style: TextStyle(fontSize: 16, fontFamily: 'Pretendard'),

@@ -2,6 +2,8 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:three_day/screens/home_screen.dart';
 import 'package:three_day/screens/profile_screen.dart';
+import 'package:three_day/screens/record_screen.dart';
+import 'package:three_day/widgets/Challenge_complete_card.dart';
 
 class MainScreens extends StatefulWidget {
   const MainScreens({super.key});
@@ -17,10 +19,7 @@ class _MainScreensState extends State<MainScreens>
   @override
   void initState() {
     super.initState();
-    tabController = TabController(
-      length: 3,
-      vsync: this,
-    );
+    tabController = TabController(length: 3, vsync: this);
   }
 
   @override
@@ -38,9 +37,12 @@ class _MainScreensState extends State<MainScreens>
         physics: NeverScrollableScrollPhysics(),
         children: [
           HomeScreen(),
-          Tab(text: '탭1'),
+
+          RecordScreen(challengeName: '물마시기', challengePlan: '하루 1리터', clearDate: DateTime.now(),),
+          //Center(child: ChallengeCompleteCard(challengeName: '물마시기', challengePlan: '하루 1리터', clearDate: DateTime.now(),)),
 
           ProfileScreen(),
+
         ],
       ),
       bottomNavigationBar: BottomNavigationBar(
@@ -49,11 +51,17 @@ class _MainScreensState extends State<MainScreens>
           tabController.animateTo(index);
           setState(() {});
         },
+        selectedItemColor: Color(0xFF358CFF),
+        iconSize: 35,
         type: BottomNavigationBarType.fixed,
         showSelectedLabels: false,
         showUnselectedLabels: false,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'home'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            label: 'home',
+
+          ),
           BottomNavigationBarItem(
             icon: Icon(Icons.wine_bar),
             label: 'challenge_record',

@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:three_day/widgets/in_progress_challenge_widget.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -109,6 +110,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         ),
         SizedBox(height: 7,),
         Divider(color: Color(0xFFD1D5DA), thickness: 1, height: 5),
+
       ],
     );
   }
