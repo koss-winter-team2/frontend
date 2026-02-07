@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:stroke_text/stroke_text.dart';
 
-import 'home_screen.dart';
 import 'main_screen.dart';
 
 class IntroScreen extends StatefulWidget {
@@ -19,7 +18,9 @@ class _IntroScreenState extends State<IntroScreen> {
     Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacement(
         context,
-        MaterialPageRoute(builder: (context) => const MainScreen()),
+        MaterialPageRoute(
+            builder: (context) => const MainScreen()
+        ),
       );
     });
   }

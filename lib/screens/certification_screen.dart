@@ -8,10 +8,10 @@ class CertificationScreen extends StatefulWidget {
   const CertificationScreen({super.key});
 
   @override
-  State<CertificationScreen> createState() => _CertificationScreen1State();
+  State<CertificationScreen> createState() => _CertificationScreenState();
 }
 
-class _CertificationScreen1State extends State<CertificationScreen> {
+class _CertificationScreenState extends State<CertificationScreen> {
   ChallengeState state = const ChallengeState(
     photoCount: 0,
   );

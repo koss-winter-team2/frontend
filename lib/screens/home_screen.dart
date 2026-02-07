@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'certification_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -36,128 +38,128 @@ class _HomeScreenState extends State<HomeScreen> {
     });
     showDialog(
       context: context,
-      builder: (context) {
-        return Dialog(
-          insetPadding: const EdgeInsets.all(20),
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(30),
-          ),
-          child: Form(
-            autovalidateMode: _autovalidateMode,
-            key: _globalKey,
-            child: Container(
-              decoration: BoxDecoration(
-                color: const Color(0xFFD9EAFF),
+      builder: (dialogContext) {
+        return Center(
+          child: SingleChildScrollView(
+            child: Dialog(
+              insetPadding: const EdgeInsets.all(20),
+              shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30),
               ),
-              width: MediaQuery.of(context).size.width * 0.9,
-              height: MediaQuery.of(context).size.height * 0.65,
-              padding: const EdgeInsets.all(9),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  const Padding(
-                    padding: EdgeInsets.all(6),
-                    child: Text(
-                      '작심삼일 챌린지 생성',
-                      style: TextStyle(
-                        fontFamily: 'Pretendard',
-                        fontSize: 27,
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
+              child: Form(
+                key: _globalKey,
+                autovalidateMode: _autovalidateMode,
+                child: Container(
+                  width: MediaQuery.of(context).size.width * 0.9,
+                  padding: const EdgeInsets.all(9),
+                  decoration: BoxDecoration(
+                    color: const Color(0xFFD9EAFF),
+                    borderRadius: BorderRadius.circular(30),
                   ),
-                  const SizedBox(height: 12),
-                  Expanded(
-                    child: SingleChildScrollView(
-                      child: Column(
+                  child: Column(
+                    mainAxisSize: MainAxisSize.min,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      const Padding(
+                        padding: EdgeInsets.all(6),
+                        child: Text(
+                          '작심삼일 챌린지 생성',
+                          style: TextStyle(
+                            fontFamily: 'Pretendard',
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      _buildInputSection(
+                        editingController: _challengeNameEditingController,
+                        title: '챌린지 이름',
+                        hint: '챌린지 생성이름을 작성 해주세요!',
+                        number: '1',
+                      ),
+                      const SizedBox(height: 12),
+                      _buildInputSection(
+                        editingController: _challengeGoalController,
+                        title: '카테고리',
+                        hint: 'ex) 다이어트, 건강, 취미, 자기개발',
+                        number: '2',
+                      ),
+                      const SizedBox(height: 12),
+                      _buildInputSection(
+                        editingController: _challengePlanController,
+                        title: '계획',
+                        hint: 'ex) 스쿼트 10회, 물 1L 마시기',
+                        number: '3',
+                      ),
+                      const SizedBox(height: 30),
+                      Row(
                         children: [
-                          _buildInputSection(
-                            editingController: _challengeNameEditingController,
-                            title: '챌린지 이름',
-                            hint: '챌린지 생성이름을 작성 해주세요!',
-                            number: '1',
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: () {
+                                Navigator.pop(context);
+                              },
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                padding: const EdgeInsets.symmetric(vertical: 15),
+                                backgroundColor: Colors.grey[300],
+                              ),
+                              child: const Text(
+                                '취소',
+                                style: TextStyle(
+                                  fontFamily: 'Pretendard',
+                                  color: Colors.black45,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
                           ),
-
-                          const SizedBox(height: 12),
-                          _buildInputSection(
-                            editingController: _challengeGoalController,
-                            title: '카테고리',
-                            hint: 'ex) 다이어트, 건강, 취미, 자기개발',
-                            number: '2',
-                          ),
-                          const SizedBox(height: 12),
-                          _buildInputSection(
-                            editingController: _challengePlanController,
-                            title: '계획',
-                            hint: 'ex) 스쿼트 10회, 물 1L 마시기',
-                            number: '3',
+                          const SizedBox(width: 8),
+                          Expanded(
+                            child: ElevatedButton(
+                              onPressed: _isEnavled
+                                  ? () {
+                                final form = _globalKey.currentState;
+                                if (form == null || !form.validate()) {
+                                  return;
+                                }
+                                setState(() {
+                                  _autovalidateMode = AutovalidateMode.always;
+                                  _isEnavled = false;
+                                });
+                                Navigator.push(
+                                  context,
+                                  MaterialPageRoute(
+                                    builder: (_) => const CertificationScreen(),
+                                  ),
+                                );
+                              }
+                                  : null,
+                              style: ElevatedButton.styleFrom(
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                padding: const EdgeInsets.symmetric(vertical: 15),
+                                backgroundColor: const Color(0xFF358CFF),
+                              ),
+                              child: const Text(
+                                '생성',
+                                style: TextStyle(
+                                  fontFamily: 'Pretendard',
+                                  color: Colors.white,
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
                           ),
                         ],
                       ),
-                    ),
-                  ),
-                  const SizedBox(height: 16),
-                  Row(
-                    children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            backgroundColor: Colors.grey[300],
-                          ),
-                          child: const Text(
-                            '취소',
-                            style: TextStyle(
-                              fontFamily: 'Pretendard',
-                              color: Colors.black45,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      ),
-                      const SizedBox(width: 8),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: _isEnavled
-                              ? () {
-                                  final form = _globalKey.currentState;
-                                  if (form == null || !form.validate()) {
-                                    return;
-                                  }
-                                  setState(() {
-                                    _autovalidateMode = AutovalidateMode.always;
-                                    _isEnavled = false;
-                                  });
-                                  Navigator.pop(context);
-                                }
-                              : null,
-                          style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 15),
-                            backgroundColor: const Color(0xFF358CFF),
-                          ),
-                          child: const Text(
-                            '생성',
-                            style: TextStyle(
-                              fontFamily: 'Pretendard',
-                              color: Colors.white,
-                              fontSize: 20,
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
                   ),
-                ],
+                ),
               ),
             ),
           ),
@@ -229,118 +231,120 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Material(
-      child: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              const SizedBox(height: 28.46),
-              const Text(
-                '사용자님, 안녕하세요!',
-                style: TextStyle(
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.w400,
-                  fontSize: 20,
-                ),
-              ),
-              const Text(
-                '오늘도 작심삼일을 향해 달려볼까요?',
-                style: TextStyle(
-                  fontFamily: 'Pretendard',
-                  fontWeight: FontWeight.w500,
-                  fontSize: 23,
-                ),
-              ),
-              const SizedBox(height: 28.54),
-              Container(
-                width: double.infinity,
-                height: 40.17,
-                decoration: const BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.only(
-                    topLeft: Radius.circular(15),
-                    topRight: Radius.circular(15),
+    return Scaffold(
+      body: SingleChildScrollView(
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 16),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const SizedBox(height: 28.46),
+                const Text(
+                  '사용자님, 안녕하세요!',
+                  style: TextStyle(
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w400,
+                    fontSize: 20,
                   ),
                 ),
-                child: const Padding(
-                  padding: EdgeInsets.all(9),
-                  child: Text(
-                    '진행중인 챌린지',
-                    style: TextStyle(
-                      fontSize: 16,
-                      color: Colors.white,
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w500,
+                const Text(
+                  '오늘도 작심삼일을 향해 달려볼까요?',
+                  style: TextStyle(
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w500,
+                    fontSize: 23,
+                  ),
+                ),
+                const SizedBox(height: 28.54),
+                Container(
+                  width: double.infinity,
+                  height: 40.17,
+                  decoration: const BoxDecoration(
+                    color: Colors.blue,
+                    borderRadius: BorderRadius.only(
+                      topLeft: Radius.circular(15),
+                      topRight: Radius.circular(15),
+                    ),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(9),
+                    child: Text(
+                      '진행중인 챌린지',
+                      style: TextStyle(
+                        fontSize: 16,
+                        color: Colors.white,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w500,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              Container(
-                width: double.infinity,
-                height: 348,
-                decoration: const BoxDecoration(
-                  color: Color(0xFFD1D1D1),
-                  borderRadius: BorderRadius.only(
-                    bottomRight: Radius.circular(15),
-                    bottomLeft: Radius.circular(15),
+                Container(
+                  width: double.infinity,
+                  height: 348,
+                  decoration: const BoxDecoration(
+                    color: Color(0xFFD1D1D1),
+                    borderRadius: BorderRadius.only(
+                      bottomRight: Radius.circular(15),
+                      bottomLeft: Radius.circular(15),
+                    ),
                   ),
-                ),
-                child: const Center(
-                  //요부분 나중에 챌린지 생성하면 화면 바뀌도록!! InProgressChallengeWidget() 으로 바꾸기
-                  child: Text(
-                    '현재 진행중인 챌린지가 없어요.. \n신규 챌린지를 생성하여, 도전해보세요!',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'Pretendard',
-                      fontWeight: FontWeight.w400,
+                  child: const Center(
+                    //요부분 나중에 챌린지 생성하면 화면 바뀌도록!! InProgressChallengeWidget() 으로 바꾸기
+                    child: Text(
+                      '현재 진행중인 챌린지가 없어요.. \n신규 챌린지를 생성하여, 도전해보세요!',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w400,
+                      ),
                     ),
                   ),
                 ),
-              ),
-              const SizedBox(height: 20),
-              Padding(
-                padding: const EdgeInsets.all(20),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: () => challengeDialog(),
-                      child: Container(
-                        width: 102,
-                        height: 97,
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFEAF3FE),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Container(
-                            width: 26,
-                            height: 26,
-                            decoration: const BoxDecoration(
-                              color: Color(0xFF4B4B4B),
-                              shape: BoxShape.circle,
+                const SizedBox(height: 20),
+                Padding(
+                  padding: const EdgeInsets.all(20),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: () => challengeDialog(),
+                        child: Container(
+                          width: 102,
+                          height: 97,
+                          decoration: BoxDecoration(
+                            color: const Color(0xFFEAF3FE),
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: Center(
+                            child: Container(
+                              width: 26,
+                              height: 26,
+                              decoration: const BoxDecoration(
+                                color: Color(0xFF4B4B4B),
+                                shape: BoxShape.circle,
+                              ),
+                              child: const Icon(Icons.add, color: Colors.white, size: 13),
                             ),
-                            child: const Icon(Icons.add, color: Colors.white, size: 13),
                           ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 40),
-                    const Center(
-                      child: Text(
-                        '신규 챌린지 생성',
-                        style: TextStyle(
-                          fontFamily: 'Pretendard',
-                          fontSize: 20,
-                          fontWeight: FontWeight.w500,
+                      const SizedBox(width: 40),
+                      const Center(
+                        child: Text(
+                          '신규 챌린지 생성',
+                          style: TextStyle(
+                            fontFamily: 'Pretendard',
+                            fontSize: 20,
+                            fontWeight: FontWeight.w500,
+                          ),
                         ),
                       ),
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),
