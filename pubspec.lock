@@ -106,10 +106,10 @@ packages:
     dependency: "direct dev"
     description:
       name: flutter_lints
-      sha256: "3105dc8492f6183fb076ccf1f351ac3d60564bff92e20bfc4af9cc1651f4e7e1"
+      sha256: a25a15ebbdfc33ab1cd26c63a6ee519df92338a9c10f122adda92938253bef04
       url: "https://pub.dev"
     source: hosted
-    version: "6.0.0"
+    version: "2.0.3"
   flutter_plugin_android_lifecycle:
     dependency: transitive
     description:
@@ -172,10 +172,8 @@ packages:
     dependency: transitive
     description:
       name: image_picker_ios
-      sha256: b9c4a438a9ff4f60808c9cf0039b93a42bb6c2211ef6ebb647394b2b3fa84588
       url: "https://pub.dev"
     source: hosted
-    version: "0.8.13+6"
   image_picker_linux:
     dependency: transitive
     description:
@@ -236,18 +234,8 @@ packages:
     dependency: transitive
     description:
       name: lints
-      sha256: "12f842a479589fea194fe5c5a3095abc7be0c1f2ddfa9a0e76aed1dbd26a87df"
       url: "https://pub.dev"
     source: hosted
-    version: "6.1.0"
-  logger:
-    dependency: "direct dev"
-    description:
-      name: logger
-      sha256: a7967e31b703831a893bbc3c3dd11db08126fe5f369b5c648a36f821979f5be3
-      url: "https://pub.dev"
-    source: hosted
-    version: "2.6.2"
   matcher:
     dependency: transitive
     description:
@@ -268,10 +256,8 @@ packages:
     dependency: transitive
     description:
       name: meta
-      sha256: "23f08335362185a5ea2ad3a4e597f1375e78bce8a040df5c600c8d3552ef2394"
       url: "https://pub.dev"
     source: hosted
-    version: "1.17.0"
   mime:
     dependency: transitive
     description:
@@ -345,10 +331,8 @@ packages:
     dependency: transitive
     description:
       name: test_api
-      sha256: ab2726c1a94d3176a45960b6234466ec367179b87dd74f1611adb1f3b5fb9d55
       url: "https://pub.dev"
     source: hosted
-    version: "0.7.7"
   typed_data:
     dependency: transitive
     description:
@@ -357,14 +341,6 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.4.0"
-  validators:
-    dependency: "direct main"
-    description:
-      name: validators
-      sha256: "884515951f831a9c669a41ed6c4d3c61c2a0e8ec6bca761a4480b28e99cecf5d"
-      url: "https://pub.dev"
-    source: hosted
-    version: "3.0.0"
   vector_math:
     dependency: transitive
     description:
@@ -390,5 +366,3 @@ packages:
     source: hosted
     version: "1.1.1"
 sdks:
-  dart: ">=3.10.7 <4.0.0"
-  flutter: ">=3.38.0"
