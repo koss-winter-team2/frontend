@@ -15,7 +15,6 @@ class ChallengeCompleteCard extends StatefulWidget {
 }
 
 class _ChallengeCompleteCardState extends State<ChallengeCompleteCard> {
-  final List<File?> _imageList = []; // 받아온 이미지?
   late final String year = widget.challengeModel.createdAt.year.toString();
   late final String month = widget.challengeModel.createdAt.month.toString().padLeft(2, '0');
   late String day = widget.challengeModel.createdAt.day.toString().padLeft(2, '0');
