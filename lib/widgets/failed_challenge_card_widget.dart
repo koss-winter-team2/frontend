@@ -1,16 +1,18 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jaksimsamil/services/api_service.dart';
 
+import '../services/api_service.dart';
 import '../models/challenge_model.dart';
-import '../models/challenge_state.dart';
 import '../screens/main_screen.dart';
 
 class FailedChallengeCardWidget extends StatefulWidget {
   final ChallengeModel challengeModel;
   final VoidCallback onDelete;
 
-  const FailedChallengeCardWidget({super.key, required this.challengeModel,required this.onDelete});
+  const FailedChallengeCardWidget({
+    super.key,
+    required this.challengeModel,
+    required this.onDelete,
+  });
 
   @override
   State<FailedChallengeCardWidget> createState() =>
@@ -47,29 +49,34 @@ class _FailedChallengeCardWidgetState extends State<FailedChallengeCardWidget> {
           Row(
             children: [
               Expanded(
-                child: Text(
-                  challenge.title,
-                  style: const TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'Pretendard',
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 6),
+                  child: Text(
+                    challenge.title,
+                    style: const TextStyle(
+                      fontSize: 18,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ),
               Container(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 13,
-                  vertical: 5,
-                ),
+                padding: const EdgeInsets.symmetric(horizontal: 13),
                 height: 25,
-                child: Center(
-                  child: Text(
-                    challenge.plan,
-                    style: TextStyle(fontSize: 15, fontFamily: 'Pretendard'),
-                  ),
-                ),
                 decoration: BoxDecoration(
                   color: const Color(0xFFD9EAFF),
                   borderRadius: BorderRadius.circular(15),
+                ),
+                child: Center(
+                  child: Text(
+                    challenge.plan,
+                    style: const TextStyle(
+                      fontSize: 12,
+                      fontFamily: 'Pretendard',
+                      fontWeight: FontWeight.w400,
+                    ),
+                  ),
                 ),
               ),
               const SizedBox(width: 5),
@@ -112,7 +119,11 @@ class _FailedChallengeCardWidgetState extends State<FailedChallengeCardWidget> {
                     shape: BoxShape.circle,
                     color: Color(0xFFC8C8C8),
                   ),
-                  child: Image.asset('assets/images/trash.png'),
+                  child: const Icon(
+                    Icons.delete,
+                    size: 17,
+                    color: Color(0xFF444444),
+                  ),
                 ),
               ),
             ],
@@ -136,7 +147,7 @@ class _FailedChallengeCardWidgetState extends State<FailedChallengeCardWidget> {
                 child: Container(
                   width: 10,
                   height: 10,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color(0xFFC8C8C8),
                   ),
@@ -154,12 +165,12 @@ class _FailedChallengeCardWidgetState extends State<FailedChallengeCardWidget> {
                   ),
                 ),
               ),
-              SizedBox(width: 2),
+              const SizedBox(width: 2),
               Center(
                 child: Container(
                   width: 10,
                   height: 10,
-                  decoration: BoxDecoration(
+                  decoration: const BoxDecoration(
                     shape: BoxShape.circle,
                     color: Color(0xFFC8C8C8),
                   ),
@@ -182,32 +193,32 @@ class _FailedChallengeCardWidgetState extends State<FailedChallengeCardWidget> {
                     child: Container(
                       width: 7,
                       height: 7,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Color(0xFFC8C8C8),
                       ),
                     ),
                   ),
                 ),
-              SizedBox(width: 5),
+              const SizedBox(width: 5),
               Center(
                 child: GestureDetector(
                   onTap: () async {
                     //재시작 로직
 
                     if (apiService.currentChallenge != null) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('현재 진행중인 챌린지가 있습니다.'),
+                          duration: Duration(seconds: 2),
+                        ),
+                      );
 
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            content: Text('현재 진행중인 챌린지가 있습니다.'),
-                            duration: Duration(seconds: 2),
-                          ),
-                        );
-
-                        return;
+                      return;
                     } else {
                       apiService.resetChallenge(id: challenge.challengeId);
-                      apiService.currentChallenge = await apiService.getChallengeById(challenge.challengeId);
+                      apiService.currentChallenge = await apiService
+                          .getChallengeById(challenge.challengeId);
 
                       Navigator.pushReplacement(
                         context,
@@ -215,19 +226,20 @@ class _FailedChallengeCardWidgetState extends State<FailedChallengeCardWidget> {
                       );
 
                       apiService.getChallenges();
-
-
                     }
                   },
                   child: Container(
                     width: 62,
                     height: 38,
                     decoration: BoxDecoration(
-                      color: Color(0xFF358CFF),
+                      color: const Color(0xFF358CFF),
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    child: Center(
-                      child: Image.asset('assets/images/retry.png'),
+                    child: const Center(
+                      child: Icon(
+                        Icons.refresh,
+                        color: Colors.white,
+                      ),
                     ),
                   ),
                 ),
@@ -239,7 +251,12 @@ class _FailedChallengeCardWidgetState extends State<FailedChallengeCardWidget> {
               alignment: Alignment.bottomRight,
               child: Text(
                 date,
-                style: TextStyle(fontFamily: 'Pretendard', fontSize: 12),
+                style: const TextStyle(
+                  fontFamily: 'Pretender',
+                  fontSize: 12,
+                  fontWeight: FontWeight.w400,
+                  color: Color(0xFFD1D1D1),
+                ),
               ),
             ),
           ),

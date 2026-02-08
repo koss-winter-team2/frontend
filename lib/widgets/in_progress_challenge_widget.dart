@@ -1,14 +1,10 @@
 import 'dart:convert';
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:jaksimsamil/models/challenge_model.dart';
-import 'package:jaksimsamil/models/proof_model.dart';
-import 'package:jaksimsamil/services/api_service.dart';
 
-import '../models/challenge_state.dart';
+import '../models/challenge_model.dart';
+import '../models/proof_model.dart';
+import '../services/api_service.dart';
 import '../screens/certification_screen.dart';
-import '../utils/logger.dart';
 
 class InProgressChallengeWidget extends StatefulWidget {
   final ChallengeModel challengeModel;
@@ -47,7 +43,6 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
     setState(() => isLoading = true);
     Map<int, ProofModel> loadedProofs = {};
 
-
     try {
       for (int i = 0; i < 3; i++) {
         if (widget.challengeModel.days[i]) {
@@ -57,12 +52,10 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
           );
           if (proof != null) {
             loadedProofs[i] = proof;
-          } else {
           }
         }
       }
-    } catch (e) {
-    }
+    } catch (e) { }
 
     setState(() {
       proofsMap = loadedProofs;
@@ -73,8 +66,8 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
   Widget _buildDayImage(int dayIndex) {
     if (widget.challengeModel.days[dayIndex] && proofsMap.containsKey(dayIndex)) {
       return Container(
-        width: 82,
-        height: 82,
+        width: 90,
+        height: 90,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Image.memory(
@@ -84,12 +77,15 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
         ),
       );
     }
-    return Container(
-      width: 82,
-      height: 82,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        color: Colors.grey,
+    return Padding(
+      padding: const EdgeInsets.only(left: 3),
+      child: Container(
+        width: 90,
+        height: 90,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(10),
+          color: Colors.grey,
+        ),
       ),
     );
   }
@@ -107,7 +103,9 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
             bottomLeft: Radius.circular(15),
           ),
         ),
-        child: Center(child: CircularProgressIndicator()),
+        child: const Center(
+            child: CircularProgressIndicator(),
+        ),
       );
     }
 
@@ -123,7 +121,7 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
       ),
       child: Padding(
         padding: const EdgeInsets.only(
-          right: 16.0,
+          right: 16,
           left: 16,
           bottom: 16,
           top: 8,
@@ -141,7 +139,10 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
                 ),
                 const SizedBox(width: 10),
                 const Expanded(
-                  child: Divider(color: Colors.black, thickness: 1),
+                  child: Divider(
+                      color: Color(0xff9E9E9E),
+                      thickness: 0.5,
+                  ),
                 ),
                 const SizedBox(width: 10),
                 Text(
@@ -161,7 +162,7 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
                 width: double.infinity,
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.circular(5),
+                  borderRadius: BorderRadius.circular(10),
                   boxShadow: [
                     BoxShadow(
                       color: Colors.grey.withOpacity(0.15),
@@ -176,36 +177,50 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      const SizedBox(height: 2),
-                      Container(
-                        decoration: BoxDecoration(
-                          color: const Color(0xFFE6EEF7),
-                          borderRadius: BorderRadius.circular(15),
-                        ),
-                        child: Padding(
-                          padding: const EdgeInsets.symmetric(
-                            horizontal: 14,
-                            vertical: 10,
-                          ),
-                          child: Text(
-                            challengeModel.plan,
-                            style: const TextStyle(
-                              fontFamily: 'Pretendard',
-                              fontSize: 14,
-                              fontWeight: FontWeight.w300,
+                      const SizedBox(height: 5),
+                      Row(
+                        children: [
+                          const Padding(
+                            padding: EdgeInsets.only(left: 8),
+                            child: Text(
+                                '진행 현황',
+                                style: TextStyle(
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'Pretendard'
+                                )
                             ),
                           ),
-                        ),
+                          const SizedBox(width: 200),
+                          Container(
+                            decoration: BoxDecoration(
+                              color: const Color(0xFFE6EEF7),
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            child: Padding(
+                              padding: const EdgeInsets.symmetric(
+                                horizontal: 14,
+                                vertical: 10,
+                              ),
+                              child: Text(
+                                challengeModel.plan,
+                                style: const TextStyle(
+                                  fontFamily: 'Pretendard',
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w300,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ],
                       ),
-                      const SizedBox(height: 8),
-                      const Text('진행 현황', style: TextStyle(fontSize: 25)),
-                      const SizedBox(height: 8),
+                      const SizedBox(height: 25),
                       Container(
                         width: double.infinity,
                         height: 130,
                         decoration: BoxDecoration(
-                          color: const Color(0xFFE6EEF7),
-                          borderRadius: BorderRadius.circular(8),
+                          color: const Color(0xFFEAF3FE),
+                          borderRadius: BorderRadius.circular(10),
                         ),
                         child: Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -242,30 +257,32 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
                           ),
                         ),
                       ),
-                      const SizedBox(height: 8),
-                      ElevatedButton(
-                        onPressed: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (_) => const CertificationScreen(),
+                      const SizedBox(height: 18),
+                      Center(
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (_) => const CertificationScreen(),
+                              ),
+                            );
+                          },
+                          style: ElevatedButton.styleFrom(
+                            fixedSize: const Size(150, 45),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
                             ),
-                          );
-                        },
-
-                        style: ElevatedButton.styleFrom(
-                          fixedSize: const Size(500, 45),
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(20),
+                            backgroundColor: const Color(0xFF358CFF),
                           ),
-                          backgroundColor: const Color(0xFF358CFF),
-                        ),
-                        child: const Text(
-                          '인증하러 가기',
-                          style: TextStyle(
-                            fontFamily: 'Pretendard',
-                            color: Colors.white,
-                            fontSize: 13,
+                          child: const Text(
+                            '인증하러 가기',
+                            style: TextStyle(
+                              fontFamily: 'Pretendard',
+                              color: Colors.white,
+                              fontSize: 15,
+                              fontWeight: FontWeight.w500,
+                            ),
                           ),
                         ),
                       ),

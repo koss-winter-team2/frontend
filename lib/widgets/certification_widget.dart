@@ -1,9 +1,9 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:jaksimsamil/models/challenge_model.dart';
-import 'package:jaksimsamil/services/api_service.dart';
 
+import '../models/challenge_model.dart';
+import '../services/api_service.dart';
 import '../screens/main_screen.dart';
 import '../models/challenge_state.dart';
 
@@ -13,7 +13,6 @@ class CertificationWidget extends StatelessWidget {
   final VoidCallback onAddPhoto;// screen이 가지고 있는 함수 콜백
   final ChallengeModel currentChallenge;
 
-
   const CertificationWidget({
     super.key,
     required this.currentChallenge,
@@ -21,8 +20,6 @@ class CertificationWidget extends StatelessWidget {
     required this.photos,
     required this.onAddPhoto,
   });
-
-
 
   String getEggImage() {
     if (state.photoCount == 0) {
@@ -114,16 +111,27 @@ class CertificationWidget extends StatelessWidget {
                           final confirm = await showDialog<bool>(
                             context: context,
                             builder: (context) => AlertDialog(
-                              title: const Text('챌린지 포기'),
-                              content: const Text('정말 포기하시겠습니까?'),
+                              title: const Text(
+                                  '챌린지 포기'
+                              ),
+                              content: const Text(
+                                  '정말 포기하시겠습니까?'
+                              ),
                               actions: [
                                 TextButton(
                                   onPressed: () => Navigator.pop(context, false),
-                                  child: const Text('취소'),
+                                  child: const Text(
+                                      '취소'
+                                  ),
                                 ),
                                 TextButton(
                                   onPressed: () => Navigator.pop(context, true),
-                                  child: const Text('포기', style: TextStyle(color: Colors.red)),
+                                  child: const Text(
+                                      '포기',
+                                      style: TextStyle(
+                                          color: Colors.red
+                                      ),
+                                  ),
                                 ),
                               ],
                             ),
@@ -132,16 +140,26 @@ class CertificationWidget extends StatelessWidget {
                           if (confirm == true) {
                             apiService.currentChallenge = null;
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('챌린지를 포기했습니다')),
+                              const SnackBar(
+                                  content: Text(
+                                      '챌린지를 포기했습니다'
+                                  ),
+                              ),
                             );
 
                             Navigator.pushReplacement(
                               context,
-                              MaterialPageRoute(builder: (_) => const MainScreen()),
+                              MaterialPageRoute(
+                                  builder: (_) => const MainScreen()
+                              ),
                             );
 
                             ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(content: Text('챌린지를 포기했습니다')),
+                              const SnackBar(
+                                  content: Text(
+                                      '챌린지를 포기했습니다'
+                                  ),
+                              ),
                             );
 
                           }

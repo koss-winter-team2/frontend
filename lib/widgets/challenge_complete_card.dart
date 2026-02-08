@@ -1,6 +1,6 @@
-import 'dart:io';
 import 'package:flutter/material.dart';
-import 'package:jaksimsamil/models/challenge_model.dart';
+
+import '../models/challenge_model.dart';
 
 class ChallengeCompleteCard extends StatefulWidget {
   final ChallengeModel challengeModel;
@@ -20,7 +20,6 @@ class _ChallengeCompleteCardState extends State<ChallengeCompleteCard> {
   late String day = widget.challengeModel.createdAt.day.toString().padLeft(2, '0');
 
   late String date = '$year.$month.$day';
-
 
   @override
   Widget build(BuildContext context) {
@@ -42,7 +41,11 @@ class _ChallengeCompleteCardState extends State<ChallengeCompleteCard> {
               Expanded(
                 child: Text(
                   challenge.title,
-                  style: const TextStyle(fontSize: 20, fontFamily: 'Pretendard'),
+                  style: const TextStyle(
+                    fontSize: 10,
+                    fontFamily: 'Pretendard',
+                    fontWeight: FontWeight.w500,
+                  ),
                 ),
               ),
               Container(
@@ -54,15 +57,18 @@ class _ChallengeCompleteCardState extends State<ChallengeCompleteCard> {
                 ),
                 child: Center(
                   child: Text(
-                    style: const TextStyle(fontSize: 15, fontFamily: 'Pretendard'),
                     challenge.plan,
+                    style: const TextStyle(
+                        fontSize: 15,
+                        fontFamily: 'Pretendard',
+                        fontWeight: FontWeight.w500,
+                    ),
                   ),
                 ),
               ),
             ],
           ),
           const SizedBox(height: 20),
-
           Row(
             children: [
               Container(
@@ -76,7 +82,7 @@ class _ChallengeCompleteCardState extends State<ChallengeCompleteCard> {
                   ),
                 ),
               ),
-              SizedBox(width: 2),
+              const SizedBox(width: 2),
               Center(
                 child: Container(
                   width: 10,
@@ -110,7 +116,7 @@ class _ChallengeCompleteCardState extends State<ChallengeCompleteCard> {
                   ),
                 ),
               ),
-              SizedBox(width: 2),
+              const SizedBox(width: 2),
               Container(
                 width: 65,
                 height: 65,

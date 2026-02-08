@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:jaksimsamil/models/challenge_model.dart';
-import 'package:jaksimsamil/services/api_service.dart';
-import 'package:jaksimsamil/widgets/in_progress_challenge_widget.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
-import 'certification_screen.dart';
+import '../models/challenge_model.dart';
+import '../services/api_service.dart';
+import '../widgets/in_progress_challenge_widget.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -161,12 +159,10 @@ class _HomeScreenState extends State<HomeScreen> {
 
                                 await _createChallenge(title: _challengeNameEditingController.text, plan: _challengePlanController.text, category: _challengeGoalController.text);
 
-
-
                                  Navigator.push(
                                    context,
                                    MaterialPageRoute(
-                                     builder: (_) => const CertificationScreen(),
+                                     builder: (_) => const HomeScreen(),
                                    ),
                                  );
                               }
@@ -317,7 +313,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   width: double.infinity,
                   height: 348,
                   decoration: const BoxDecoration(
-                    color: Color(0xFFD1D1D1),
+                    color: Color(0xffD9D9D9),
                     borderRadius: BorderRadius.only(
                       bottomRight: Radius.circular(15),
                       bottomLeft: Radius.circular(15),
@@ -326,6 +322,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: _apiService.currentChallenge == null ? const Center(
                     //요부분 나중에 챌린지 생성하면 화면 바뀌도록!! InProgressChallengeWidget() 으로 바꾸기
                     child: Text(
+                      textAlign: TextAlign.center,
                       '현재 진행중인 챌린지가 없어요.. \n신규 챌린지를 생성하여, 도전해보세요!',
                       style: TextStyle(
                         fontSize: 16,
@@ -333,7 +330,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                  ) : InProgressChallengeWidget(challengeModel: _apiService.currentChallenge!,),
+                  ) : InProgressChallengeWidget(challengeModel: _apiService.currentChallenge!),
                 ),
                 const SizedBox(height: 20),
                 Padding(

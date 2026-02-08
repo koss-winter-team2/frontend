@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:jaksimsamil/services/api_service.dart';
-import 'package:jaksimsamil/utils/logger.dart';
 
+import '../services/api_service.dart';
 import '../models/challenge_model.dart';
 import '../widgets/challenge_complete_card.dart';
 import '../widgets/failed_challenge_card_widget.dart';
@@ -11,8 +10,6 @@ class RecordScreen extends StatefulWidget {
   const RecordScreen({
     super.key,
   });
-
-
 
   @override
   State<RecordScreen> createState() => _RecordScreenState();
@@ -31,7 +28,6 @@ class _RecordScreenState extends State<RecordScreen>{
   }
 
   Future<void> loadChallenges() async {
-
     setState(() {
       isLoading = true;
     });
@@ -48,8 +44,6 @@ class _RecordScreenState extends State<RecordScreen>{
       });
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -108,10 +102,12 @@ class _RecordScreenState extends State<RecordScreen>{
                       children: [
 
                         Expanded(
-                          child: ListView.builder(controller: scrollController,itemCount:failedChallenges.length + 1 , itemBuilder: (context, index) {
-
-                            if(index == 0){
-                              return  Column(
+                          child: ListView.builder(
+                            controller: scrollController,
+                            itemCount:failedChallenges.length + 1,
+                            itemBuilder: (context, index) {
+                            if (index == 0) {
+                              return Column(
                                 children: [
                                   Container(
                                     margin: const EdgeInsets.symmetric(vertical: 10),
@@ -125,35 +121,34 @@ class _RecordScreenState extends State<RecordScreen>{
                                   const Align(
                                     alignment: Alignment.topLeft,
                                     child: Padding(
-                                      padding: EdgeInsets.only(left: 16,bottom: 15),
-                                      child: Text('미완수 챌린지 목록',style: TextStyle(
+                                      padding: EdgeInsets.only(left: 20, bottom: 15),
+                                      child: Text('미완수 챌린지 목록',
+                                        style: TextStyle(
                                           fontFamily: 'Pretendard',
                                           color: Colors.white,
                                           fontSize: 25,
-                                          fontWeight: FontWeight.w900
-                                      ),),
+                                          fontWeight: FontWeight.w600
+                                        ),
+                                      ),
                                     ),
                                   ),
                                 ],
                               );
                             }
 
-
                             return Container(
-                              decoration: const BoxDecoration(color: Colors.white),
+                              decoration: const BoxDecoration(
+                                  color: Colors.white
+                              ),
                               child: Padding(
-                                padding: const EdgeInsets.symmetric(vertical: 7,horizontal: 10),
+                                padding: const EdgeInsets.symmetric(vertical: 7, horizontal: 10),
                                 child: FailedChallengeCardWidget(
                                   challengeModel: failedChallenges[index-1],
-                                    onDelete: (){
-                                    setState(() {
-
-                                    });
-                                    }
+                                    onDelete: () { }
                                 ),
                               ),
                             );
-                          },),
+                          }),
                         )
                       ],
                     ),
@@ -164,6 +159,5 @@ class _RecordScreenState extends State<RecordScreen>{
           ),
       ),
     );
-
   }
 }
