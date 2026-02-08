@@ -191,7 +191,7 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
                                 )
                             ),
                           ),
-                          const SizedBox(width: 200),
+                          const Spacer(),
                           Container(
                             decoration: BoxDecoration(
                               color: const Color(0xFFE6EEF7),
