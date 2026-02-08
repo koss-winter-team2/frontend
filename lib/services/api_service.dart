@@ -92,7 +92,6 @@ class ApiService {
     if (response.statusCode == 201) {
       final newChallenge = ChallengeModel.fromJson(jsonDecode(response.body));
 
-
       currentChallenge = newChallenge;
 
       return newChallenge;
@@ -154,8 +153,6 @@ class ApiService {
       var compressedBytes = img.encodeJpg(resized, quality: 85);
 
       String base64Image = base64Encode(compressedBytes);
-
-
 
       final prefs = await SharedPreferences.getInstance();
       final token = prefs.getString('jwt_token');
@@ -223,13 +220,19 @@ class ApiService {
     required int dayIndex,
   }) async {
     try {
-      final response = await http.post(
+      final prefs = await SharedPreferences.getInstance();
+      final token = prefs.getString('jwt_token');
+
+      final response = await http.get(
         Uri.parse('$baseUrl/api/v1/challenges/$id/proof/$dayIndex'),
-        headers: {'Accept': 'application/json'},
+        headers: {
+          'Accept': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
       );
 
       if (response.statusCode == 200) {
-        logger.d('이미지 불러오기 성공');
+        logger.d('이미지 불러오기 성공 $jsonDecode(response.body)');
 
         ProofModel proofModel = ProofModel.fromJson(jsonDecode(response.body));
 
@@ -243,9 +246,7 @@ class ApiService {
     }
   }
 
-  Future<void> resetChallenge({
-    required String id,
-  }) async {
+  Future<void> resetChallenge({required String id}) async {
     try {
       final response = await http.post(
         Uri.parse('$baseUrl/api/v1/challenges/{$id}/reset'),
@@ -254,8 +255,6 @@ class ApiService {
 
       if (response.statusCode == 200) {
         logger.d('리셋 성공!');
-
-
       } else {
         throw Exception('리셋 실패 : ${response.statusCode}');
       }
@@ -292,6 +291,3 @@ class ApiService {
     }
   }
 }
-
-
-

@@ -47,15 +47,20 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
     setState(() => isLoading = true);
     Map<int, ProofModel> loadedProofs = {};
 
+
     try {
       for (int i = 0; i < 3; i++) {
+        print('$i번째 날짜 활성화 상태: ${widget.challengeModel.days[i]}');
         if (widget.challengeModel.days[i]) {
           final proof = await apiService.getUploadProof(
             id: challengeModel.challengeId,
             dayIndex: i,
           );
           if (proof != null) {
-            loadedProofs[i] = proof; // 인덱스를 키로 저장
+            print('✅ $i번째 이미지 가져오기 성공!');
+            loadedProofs[i] = proof;
+          } else {
+            print('❌ $i번째 이미지 데이터가 null입니다.');
           }
         }
       }
@@ -66,6 +71,7 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
     setState(() {
       proofsMap = loadedProofs;
       isLoading = false;
+      print('📊 최종 로드된 이미지 개수: ${proofsMap.length}');
     });
   }
 

@@ -42,7 +42,6 @@ class _FailedChallengeCardWidgetState extends State<FailedChallengeCardWidget> {
         borderRadius: BorderRadius.circular(15),
         color: const Color(0xFFF6F7FC),
       ),
-      // 구분용 색
       child: Column(
         children: [
           Row(

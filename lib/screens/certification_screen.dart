@@ -44,7 +44,8 @@ class _CertificationScreenState extends State<CertificationScreen> {
     });
 
     _apiService.uploadProof(challengeId: _apiService.currentChallenge!.challengeId, dayIndex: photos.length-1, imageFile: File(image.path));
-    logger.d('사진 업데이트 성공 ${photos.length-1}');
+    _apiService.currentChallenge?.days[photos.length-1] = true;
+
   }
 
   @override
