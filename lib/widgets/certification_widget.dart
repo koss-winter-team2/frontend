@@ -70,33 +70,36 @@ class CertificationWidget extends StatelessWidget {
                 child: Column(
                   children: [
                     Stack(
+                      alignment: Alignment.center,
                       children: [
                         Image.asset(
-                            'assets/images/board.png'
+                          'assets/images/board.png',
                         ),
-                        const Positioned(
-                          left: 50,
-                          top: 45,
-                          child: Text(
-                            '오늘의 작심삼일 목표',
-                            style: TextStyle(
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w400,
-                              fontSize: 15,
-                              color: Colors.white,
+                        const Center(
+                          child: Padding(
+                            padding: EdgeInsets.only(bottom: 10),
+                            child: Text(
+                              '오늘의 작심삼일 목표',
+                              style: TextStyle(
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w400,
+                                fontSize: 15,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
-                        Positioned(
-                          left: 45,
-                          top: 65,
-                          child: Text(
-                            currentChallenge.plan,
-                            style: const TextStyle(
-                              fontFamily: 'Pretendard',
-                              fontWeight: FontWeight.w700,
-                              fontSize: 26,
-                              color: Colors.white,
+                        Center(
+                          child: Padding(
+                            padding: const EdgeInsets.only(top: 50),
+                            child: Text(
+                              currentChallenge.plan,
+                              style: const TextStyle(
+                                fontFamily: 'Pretendard',
+                                fontWeight: FontWeight.w700,
+                                fontSize: 26,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
@@ -161,7 +164,6 @@ class CertificationWidget extends StatelessWidget {
                                   ),
                               ),
                             );
-
                           }
                         },
                         child: Image.asset(

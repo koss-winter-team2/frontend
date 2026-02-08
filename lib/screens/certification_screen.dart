@@ -1,10 +1,8 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:jaksimsamil/models/challenge_model.dart';
-import 'package:jaksimsamil/services/api_service.dart';
-import 'package:jaksimsamil/utils/logger.dart';
+
+import '../services/api_service.dart';
 import '../widgets/certification_widget.dart';
 import '../models/challenge_state.dart';
 
@@ -22,8 +20,6 @@ class _CertificationScreenState extends State<CertificationScreen> {
   ChallengeState state = const ChallengeState(
     photoCount: 0,
   );
-
-
 
   final ImagePicker _picker = ImagePicker();
   final List<XFile> photos = [];
