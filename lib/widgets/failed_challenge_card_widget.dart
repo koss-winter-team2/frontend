@@ -8,8 +8,9 @@ import '../screens/main_screen.dart';
 
 class FailedChallengeCardWidget extends StatefulWidget {
   final ChallengeModel challengeModel;
+  final VoidCallback onDelete;
 
-  const FailedChallengeCardWidget({super.key, required this.challengeModel});
+  const FailedChallengeCardWidget({super.key, required this.challengeModel,required this.onDelete});
 
   @override
   State<FailedChallengeCardWidget> createState() =>
@@ -97,8 +98,9 @@ class _FailedChallengeCardWidgetState extends State<FailedChallengeCardWidget> {
                   );
 
                   if (confirm == true) {
-                    setState(() {
-                      apiService.deleteData(challenge.challengeId);
+                    setState(() async {
+                      await apiService.deleteData(challenge.challengeId);
+                      widget.onDelete();
                     });
 
                     //삭제로직 넣기

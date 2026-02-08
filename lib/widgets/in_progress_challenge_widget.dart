@@ -30,7 +30,7 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
     '0',
   );
   bool isLoading = true;
-  List<ProofModel> proofs = [];
+  Map<int, ProofModel> proofsMap = {};
 
   ApiService apiService = ApiService();
 
@@ -44,10 +44,8 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
   }
 
   Future<void> loadAllProofs() async {
-    print('🔍 loadAllProofs 시작');
     setState(() => isLoading = true);
-
-    List<ProofModel> loadedProofs = [];
+    Map<int, ProofModel> loadedProofs = {};
 
     try {
       for (int i = 0; i < 3; i++) {
@@ -56,12 +54,9 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
             id: challengeModel.challengeId,
             dayIndex: i,
           );
-
-          logger.d('이미지 가져오기 $proof');
           if (proof != null) {
-            loadedProofs.add(proof);
+            loadedProofs[i] = proof; // 인덱스를 키로 저장
           }
-
         }
       }
     } catch (e) {
@@ -69,20 +64,20 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
     }
 
     setState(() {
-      proofs = loadedProofs;
+      proofsMap = loadedProofs;
       isLoading = false;
     });
   }
 
   Widget _buildDayImage(int dayIndex) {
-    if (widget.challengeModel.days[dayIndex] && proofs.length > dayIndex) {
+    if (widget.challengeModel.days[dayIndex] && proofsMap.containsKey(dayIndex)) {
       return Container(
         width: 82,
         height: 82,
         child: ClipRRect(
           borderRadius: BorderRadius.circular(10),
           child: Image.memory(
-            base64Decode(proofs[dayIndex].imageBase64),
+            base64Decode(proofsMap[dayIndex]!.imageBase64),
             fit: BoxFit.cover,
           ),
         ),

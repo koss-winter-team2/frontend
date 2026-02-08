@@ -92,7 +92,6 @@ class ApiService {
     if (response.statusCode == 201) {
       final newChallenge = ChallengeModel.fromJson(jsonDecode(response.body));
 
-      challenges.add(newChallenge);
 
       currentChallenge = newChallenge;
 
@@ -208,6 +207,7 @@ class ApiService {
       );
 
       if (response.statusCode == 200) {
+        challenges.removeWhere((element) => element.challengeId == id);
         print('삭제 성공');
       } else if (response.statusCode == 404) {
         print('삭제 실패: 챌린지가 발견되지 않음. ${response.statusCode}');

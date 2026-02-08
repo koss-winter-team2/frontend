@@ -49,22 +49,13 @@ class _RecordScreenState extends State<RecordScreen>{
     }
   }
 
-  List<ChallengeModel> get completedChallenges {
-    return apiService.challenges
-        .where((c) => c.isComplete)
-        .toList();
-  }
 
-  List<ChallengeModel> get failedChallenges {
-    final incomplete = apiService.challenges
-        .where((c) => !c.isComplete && c != apiService.currentChallenge)
-        .toList();
-
-    return incomplete.length <= 1 ? [] : incomplete;
-  }
 
   @override
   Widget build(BuildContext context) {
+    List<ChallengeModel> completedChallenges = apiService.challenges.where((element) => element.isComplete,).toList();
+    List<ChallengeModel> failedChallenges = apiService.challenges.where((element) => !element.isComplete && element.challengeId != apiService.currentChallenge?.challengeId ,).toList();
+
     if (isLoading) {
       return const Center(child: CircularProgressIndicator());
     }
@@ -147,12 +138,18 @@ class _RecordScreenState extends State<RecordScreen>{
                               );
                             }
 
+
                             return Container(
                               decoration: const BoxDecoration(color: Colors.white),
                               child: Padding(
                                 padding: const EdgeInsets.symmetric(vertical: 7,horizontal: 10),
                                 child: FailedChallengeCardWidget(
                                   challengeModel: failedChallenges[index-1],
+                                    onDelete: (){
+                                    setState(() {
+
+                                    });
+                                    }
                                 ),
                               ),
                             );
