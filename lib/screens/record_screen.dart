@@ -1,127 +1,171 @@
 import 'package:flutter/material.dart';
+import 'package:jaksimsamil/services/api_service.dart';
+import 'package:jaksimsamil/utils/logger.dart';
 
+import '../models/challenge_model.dart';
 import '../widgets/challenge_complete_card.dart';
 import '../widgets/failed_challenge_card_widget.dart';
 
 class RecordScreen extends StatefulWidget {
-  final String challengeName;
-  final String challengePlan;
-  final DateTime clearDate;
 
   const RecordScreen({
     super.key,
-    required this.challengeName,
-    required this.challengePlan,
-    required this.clearDate,
   });
+
+
 
   @override
   State<RecordScreen> createState() => _RecordScreenState();
 }
 
-class _RecordScreenState extends State<RecordScreen> {
+class _RecordScreenState extends State<RecordScreen>{
+  ApiService apiService = ApiService();
+  bool isLoading = true;
+
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    loadChallenges();
+  }
+
+  Future<void> loadChallenges() async {
+
+    setState(() {
+      isLoading = true;
+    });
+
+    try {
+      await apiService.getChallenges();
+      setState(() {
+        isLoading = false;
+      });
+    } catch (e) {
+      print('에러: $e');
+      setState(() {
+        isLoading = false;
+      });
+    }
+  }
+
+  List<ChallengeModel> get completedChallenges {
+    return apiService.challenges
+        .where((c) => c.isComplete)
+        .toList();
+  }
+
+  List<ChallengeModel> get failedChallenges {
+    final incomplete = apiService.challenges
+        .where((c) => !c.isComplete && c != apiService.currentChallenge)
+        .toList();
+
+    return incomplete.length <= 1 ? [] : incomplete;
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return const Center(child: CircularProgressIndicator());
+    }
     return Scaffold(
-      body: Stack(
-          children: [
-            Padding(
-              padding: const EdgeInsets.all(20),
-              child: Container(
-                padding: const EdgeInsets.all(16),
-                height: MediaQuery.of(context).size.height * 0.8,
-                decoration: BoxDecoration(
-                  color: const Color(0xFF_D9_EA_FF),
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: ListView.builder(
-                  itemCount: 5, //리스트 길이로 넣기
-                  itemBuilder: (context, index) {
-                    //완료 챌린지 리스트받아서 넣기
-                    return Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 7),
-                      child: ChallengeCompleteCard(
-                        challengeName: widget.challengeName,
-                        challengePlan: widget.challengePlan,
-                        clearDate: widget.clearDate,
-                      ),
-                    );
-                  },
+      body: RefreshIndicator(
+        onRefresh: loadChallenges,
+        child: Stack(
+            children: [
+              Padding(
+                padding: const EdgeInsets.all(20),
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  height: MediaQuery.of(context).size.height * 0.8,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF_D9_EA_FF),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: ListView.builder(
+                    itemCount: completedChallenges.length, //리스트 길이로 넣기
+                    itemBuilder: (context, index) {
+                      //완료 챌린지 리스트받아서 넣기
+                      return Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 7),
+                        child: ChallengeCompleteCard(
+                          challengeModel: completedChallenges[index],
+                        ),
+                      );
+                    },
+                  ),
                 ),
               ),
-            ),
-            DraggableScrollableSheet(
-              initialChildSize: 0.1,
-              minChildSize: 0.1,
-              maxChildSize: 1.0,
-              builder: (context, scrollController) {
-                return Container(
-                  decoration: const BoxDecoration(
-                    boxShadow: [
-                      BoxShadow(
-                        color: Colors.black26,
-                        blurRadius: 10,
-                        offset: Offset(0, -2),
-                      ),
-                    ],
-                    color: Color(0xFF358CFF),
-                    borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
-                  ),
-                  child: Column(
-                    children: [
+              DraggableScrollableSheet(
+                initialChildSize: 0.1,
+                minChildSize: 0.1,
+                maxChildSize: 1.0,
+                builder: (context, scrollController) {
+                  return Container(
+                    decoration: const BoxDecoration(
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black26,
+                          blurRadius: 10,
+                          offset: Offset(0, -2),
+                        ),
+                      ],
+                      color: Color(0xFF358CFF),
+                      borderRadius: BorderRadius.vertical(top: Radius.circular(20)),
+                    ),
+                    child: Column(
+                      children: [
 
-                      Expanded(
-                        child: ListView.builder(controller: scrollController,itemCount:10 + 1 , itemBuilder: (context, index) {
+                        Expanded(
+                          child: ListView.builder(controller: scrollController,itemCount:failedChallenges.length + 1 , itemBuilder: (context, index) {
 
-                          if(index == 0){
-                            return  Column(
-                              children: [
-                                Container(
-                                  margin: const EdgeInsets.symmetric(vertical: 10),
-                                  width: 40,
-                                  height: 4,
-                                  decoration: BoxDecoration(
-                                      color: Colors.white,
-                                      borderRadius: BorderRadius.circular(2)
-                                  ),
-                                ),
-                                const Align(
-                                  alignment: Alignment.topLeft,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(left: 16,bottom: 15),
-                                    child: Text('미완수 챌린지 목록',style: TextStyle(
-                                        fontFamily: 'Pretendard',
+                            if(index == 0){
+                              return  Column(
+                                children: [
+                                  Container(
+                                    margin: const EdgeInsets.symmetric(vertical: 10),
+                                    width: 40,
+                                    height: 4,
+                                    decoration: BoxDecoration(
                                         color: Colors.white,
-                                        fontSize: 25,
-                                        fontWeight: FontWeight.w900
-                                    ),),
+                                        borderRadius: BorderRadius.circular(2)
+                                    ),
                                   ),
-                                ),
-                              ],
-                            );
-                          }
+                                  const Align(
+                                    alignment: Alignment.topLeft,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: 16,bottom: 15),
+                                      child: Text('미완수 챌린지 목록',style: TextStyle(
+                                          fontFamily: 'Pretendard',
+                                          color: Colors.white,
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.w900
+                                      ),),
+                                    ),
+                                  ),
+                                ],
+                              );
+                            }
 
-                          return Container(
-                            decoration: const BoxDecoration(color: Colors.white),
-                            child: Padding(
-                              padding: const EdgeInsets.symmetric(vertical: 7,horizontal: 10),
-                              child: FailedChallengeCardWidget(
-                                challengeName: widget.challengeName,
-                                challengePlan: widget.challengePlan,
-                                clearDate: widget.clearDate,
-                                challengeState: null,
+                            return Container(
+                              decoration: const BoxDecoration(color: Colors.white),
+                              child: Padding(
+                                padding: const EdgeInsets.symmetric(vertical: 7,horizontal: 10),
+                                child: FailedChallengeCardWidget(
+                                  challengeModel: failedChallenges[index-1],
+                                ),
                               ),
-                            ),
-                          );
-                        },),
-                      )
-                    ],
-                  ),
-                );
-              },
-            ),
-          ],
-        ),
+                            );
+                          },),
+                        )
+                      ],
+                    ),
+                  );
+                },
+              ),
+            ],
+          ),
+      ),
     );
 
   }

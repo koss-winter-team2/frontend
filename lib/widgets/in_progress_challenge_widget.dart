@@ -1,21 +1,19 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:jaksimsamil/models/challenge_model.dart';
+import 'package:jaksimsamil/models/proof_model.dart';
+import 'package:jaksimsamil/services/api_service.dart';
 
 import '../models/challenge_state.dart';
+import '../screens/certification_screen.dart';
+import '../utils/logger.dart';
 
 class InProgressChallengeWidget extends StatefulWidget {
-  final String challengeName;
-  final String challengePlan;
-  final DateTime startDate;
-  final ChallengeState? challengeState;
+  final ChallengeModel challengeModel;
 
-  const InProgressChallengeWidget({
-    super.key,
-    required this.challengeState,
-    required this.startDate,
-    required this.challengePlan,
-    required this.challengeName,
-  });
+  const InProgressChallengeWidget({super.key, required this.challengeModel});
 
   @override
   State<InProgressChallengeWidget> createState() =>
@@ -23,14 +21,100 @@ class InProgressChallengeWidget extends StatefulWidget {
 }
 
 class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
-  late final String year = widget.startDate.year.toString();
-  late final String month = widget.startDate.month.toString().padLeft(2, '0');
-  late String day = widget.startDate.day.toString().padLeft(2, '0');
+  late final String year = widget.challengeModel.createdAt.year.toString();
+  late final String month = widget.challengeModel.createdAt.month
+      .toString()
+      .padLeft(2, '0');
+  late String day = widget.challengeModel.createdAt.day.toString().padLeft(
+    2,
+    '0',
+  );
+  bool isLoading = true;
+  List<ProofModel> proofs = [];
+
+  ApiService apiService = ApiService();
+
+  late ChallengeModel challengeModel = widget.challengeModel;
 
   late String date = '$year.$month.$day';
 
+  void initState() {
+    super.initState();
+    loadAllProofs();
+  }
+
+  Future<void> loadAllProofs() async {
+    print('🔍 loadAllProofs 시작');
+    setState(() => isLoading = true);
+
+    List<ProofModel> loadedProofs = [];
+
+    try {
+      for (int i = 0; i < 3; i++) {
+        if (widget.challengeModel.days[i]) {
+          final proof = await apiService.getUploadProof(
+            id: challengeModel.challengeId,
+            dayIndex: i,
+          );
+
+          logger.d('이미지 가져오기 $proof');
+          if (proof != null) {
+            loadedProofs.add(proof);
+          }
+
+        }
+      }
+    } catch (e) {
+      logger.d('불러오기 실패');
+    }
+
+    setState(() {
+      proofs = loadedProofs;
+      isLoading = false;
+    });
+  }
+
+  Widget _buildDayImage(int dayIndex) {
+    if (widget.challengeModel.days[dayIndex] && proofs.length > dayIndex) {
+      return Container(
+        width: 82,
+        height: 82,
+        child: ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.memory(
+            base64Decode(proofs[dayIndex].imageBase64),
+            fit: BoxFit.cover,
+          ),
+        ),
+      );
+    }
+    return Container(
+      width: 82,
+      height: 82,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        color: Colors.grey,
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+      return Container(
+        width: double.infinity,
+        height: 348,
+        decoration: const BoxDecoration(
+          color: Colors.white,
+          borderRadius: BorderRadius.only(
+            bottomRight: Radius.circular(15),
+            bottomLeft: Radius.circular(15),
+          ),
+        ),
+        child: Center(child: CircularProgressIndicator()),
+      );
+    }
+
     return Container(
       width: double.infinity,
       height: 348,
@@ -53,18 +137,15 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
             Row(
               children: [
                 Text(
-                  widget.challengeName,
+                  challengeModel.title,
                   style: const TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'Pretendard'
+                    fontSize: 20,
+                    fontFamily: 'Pretendard',
                   ),
                 ),
                 const SizedBox(width: 10),
                 const Expanded(
-                    child: Divider(
-                        color: Colors.black,
-                        thickness: 1
-                    ),
+                  child: Divider(color: Colors.black, thickness: 1),
                 ),
                 const SizedBox(width: 10),
                 Text(
@@ -111,7 +192,7 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
                             vertical: 10,
                           ),
                           child: Text(
-                            widget.challengePlan,
+                            challengeModel.plan,
                             style: const TextStyle(
                               fontFamily: 'Pretendard',
                               fontSize: 14,
@@ -121,10 +202,7 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
                         ),
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                          '진행 현황',
-                          style: TextStyle(fontSize: 25)
-                      ),
+                      const Text('진행 현황', style: TextStyle(fontSize: 25)),
                       const SizedBox(height: 8),
                       Container(
                         width: double.infinity,
@@ -137,40 +215,7 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
                           padding: const EdgeInsets.symmetric(horizontal: 10),
                           child: Row(
                             children: [
-                              Container(
-                                width: 95,
-                                height: 95,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    'assets/images/water.jpg', // 첫날 사진
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 3),
-                              Center(
-                                child: Container(
-                                  width: 12,
-                                  height: 12,
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    color: Color(0xFFC8C8C8),
-                                  ),
-                                ),
-                              ),
-                              SizedBox(width: 3),
-                              Container(
-                                width: 95,
-                                height: 95,
-                                child: ClipRRect(
-                                  borderRadius: BorderRadius.circular(10),
-                                  child: Image.asset(
-                                    'assets/images/water.jpg', // 2일차 사진
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
-                              ),
+                              _buildDayImage(0),
                               const SizedBox(width: 3),
                               Center(
                                 child: Container(
@@ -183,21 +228,34 @@ class _InProgressChallengeWidgetState extends State<InProgressChallengeWidget> {
                                 ),
                               ),
                               const SizedBox(width: 3),
-                              Container(
-                                width: 95,
-                                height: 95,
-                                decoration: BoxDecoration(
-                                  color: const Color(0xFFC8C8C8),
-                                  borderRadius: BorderRadius.circular(10),
+                              _buildDayImage(1),
+                              const SizedBox(width: 3),
+                              Center(
+                                child: Container(
+                                  width: 12,
+                                  height: 12,
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Color(0xFFC8C8C8),
+                                  ),
                                 ),
                               ),
+                              const SizedBox(width: 3),
+                              _buildDayImage(2),
                             ],
                           ),
                         ),
                       ),
                       const SizedBox(height: 8),
                       ElevatedButton(
-                        onPressed: () {},
+                        onPressed: () {
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (_) => const CertificationScreen(),
+                            ),
+                          );
+                        },
 
                         style: ElevatedButton.styleFrom(
                           fixedSize: const Size(500, 45),

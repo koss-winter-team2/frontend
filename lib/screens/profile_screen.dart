@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:jaksimsamil/models/challenge_model.dart';
+import 'package:jaksimsamil/services/api_service.dart';
+
+import '../utils/logger.dart';
 
 class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
@@ -8,6 +12,8 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class _ProfileScreenState extends State<ProfileScreen> {
+  final ApiService _apiService = ApiService();
+  
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -113,6 +119,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 thickness: 1,
                 height: 5
             ),
+            ElevatedButton(onPressed: () {
+              _apiService.signUp(nickname: '김코스', email: 'koss@kookmin.ac.kr', pw: '1234');
+            }, child: const Text('회원가입')),
+            ElevatedButton(onPressed: () {
+              _apiService.signIn(email: 'koss@kookmin.ac.kr', pw: '1234');
+            }, child: const Text('로그인'))
+            ,ElevatedButton(onPressed: () {
+
+
+            }, child: const Text('초기화'))
           ],
         ),
       ),

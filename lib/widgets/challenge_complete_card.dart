@@ -1,16 +1,13 @@
 import 'dart:io';
 import 'package:flutter/material.dart';
+import 'package:jaksimsamil/models/challenge_model.dart';
 
 class ChallengeCompleteCard extends StatefulWidget {
-  final String challengeName;
-  final String challengePlan;
-  final DateTime clearDate;
+  final ChallengeModel challengeModel;
 
   const ChallengeCompleteCard({
     super.key,
-    required this.challengeName,
-    required this.challengePlan,
-    required this.clearDate,
+    required this.challengeModel,
   });
 
   @override
@@ -19,15 +16,17 @@ class ChallengeCompleteCard extends StatefulWidget {
 
 class _ChallengeCompleteCardState extends State<ChallengeCompleteCard> {
   final List<File?> _imageList = []; // 받아온 이미지?
-  late final String year = widget.clearDate.year.toString();
-  late final String month = widget.clearDate.month.toString().padLeft(2, '0');
-  late String day = widget.clearDate.day.toString().padLeft(2, '0');
+  late final String year = widget.challengeModel.createdAt.year.toString();
+  late final String month = widget.challengeModel.createdAt.month.toString().padLeft(2, '0');
+  late String day = widget.challengeModel.createdAt.day.toString().padLeft(2, '0');
 
   late String date = '$year.$month.$day';
 
 
   @override
   Widget build(BuildContext context) {
+    final ChallengeModel challenge = widget.challengeModel;
+
     return Container(
       width: 320,
       height: 160,
@@ -43,22 +42,22 @@ class _ChallengeCompleteCardState extends State<ChallengeCompleteCard> {
             children: [
               Expanded(
                 child: Text(
-                  widget.challengeName,
-                  style: const TextStyle(fontSize: 20),
+                  challenge.title,
+                  style: const TextStyle(fontSize: 20, fontFamily: 'Pretendard'),
                 ),
               ),
               Container(
                 padding: const EdgeInsets.symmetric(horizontal: 13, vertical: 5),
                 height: 25,
-                child: Center(
-                  child: Text(
-                    style: TextStyle(fontSize: 15),
-                    widget.challengePlan,
-                  ),
-                ),
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(15),
                   color: const Color(0xFFD9EAFF),
+                ),
+                child: Center(
+                  child: Text(
+                    style: const TextStyle(fontSize: 15, fontFamily: 'Pretendard'),
+                    challenge.plan,
+                  ),
                 ),
               ),
             ],

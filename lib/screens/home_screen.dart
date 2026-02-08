@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:jaksimsamil/models/challenge_model.dart';
+import 'package:jaksimsamil/services/api_service.dart';
+import 'package:jaksimsamil/widgets/in_progress_challenge_widget.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'certification_screen.dart';
 
@@ -10,13 +14,17 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  final ApiService _apiService = ApiService();
   GlobalKey<FormState> _globalKey = GlobalKey<FormState>();
   final TextEditingController _challengeNameEditingController = TextEditingController();
   TextEditingController _challengeGoalController = TextEditingController();
   TextEditingController _challengePlanController = TextEditingController();
   late AutovalidateMode _autovalidateMode;
 
+
+
   late bool _isEnavled;
+
 
   @override
   void dispose() {
@@ -25,6 +33,26 @@ class _HomeScreenState extends State<HomeScreen> {
     _challengePlanController.dispose();
     _challengeNameEditingController.dispose();
     _challengeGoalController.dispose();
+  }
+
+  void initState() {
+    super.initState();
+    _loadChallenges();
+  }
+
+  Future<void> _loadChallenges() async {
+    await _apiService.getChallenges();
+    setState(() {});
+  }
+
+  Future<ChallengeModel> _createChallenge({
+    required String title,
+    required String plan,
+    required String category
+}) async {
+
+    setState(() {});
+    return _apiService.createChallenge(title: title, plan: plan, category: category);
   }
 
   void challengeDialog() {
@@ -121,7 +149,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Expanded(
                             child: ElevatedButton(
                               onPressed: _isEnavled
-                                  ? () {
+                                  ? () async {
                                 final form = _globalKey.currentState;
                                 if (form == null || !form.validate()) {
                                   return;
@@ -130,12 +158,17 @@ class _HomeScreenState extends State<HomeScreen> {
                                   _autovalidateMode = AutovalidateMode.always;
                                   _isEnavled = false;
                                 });
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (_) => const CertificationScreen(),
-                                  ),
-                                );
+
+                                await _createChallenge(title: _challengeNameEditingController.text, plan: _challengePlanController.text, category: _challengeGoalController.text);
+
+
+
+                                 Navigator.push(
+                                   context,
+                                   MaterialPageRoute(
+                                     builder: (_) => const CertificationScreen(),
+                                   ),
+                                 );
                               }
                                   : null,
                               style: ElevatedButton.styleFrom(
@@ -290,7 +323,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       bottomLeft: Radius.circular(15),
                     ),
                   ),
-                  child: const Center(
+                  child: _apiService.currentChallenge == null ? const Center(
                     //요부분 나중에 챌린지 생성하면 화면 바뀌도록!! InProgressChallengeWidget() 으로 바꾸기
                     child: Text(
                       '현재 진행중인 챌린지가 없어요.. \n신규 챌린지를 생성하여, 도전해보세요!',
@@ -300,7 +333,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         fontWeight: FontWeight.w400,
                       ),
                     ),
-                  ),
+                  ) : InProgressChallengeWidget(challengeModel: _apiService.currentChallenge!,),
                 ),
                 const SizedBox(height: 20),
                 Padding(
@@ -308,7 +341,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Row(
                     children: [
                       GestureDetector(
-                        onTap: () => challengeDialog(),
+                        onTap: () => _apiService.currentChallenge == null ? challengeDialog() : null,
                         child: Container(
                           width: 102,
                           height: 97,
